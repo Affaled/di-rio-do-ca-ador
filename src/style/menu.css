@@ -1,0 +1,45 @@
+.menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--color-bg-dark) 25%, transparent),
+		color-mix(in srgb, var(--color-bg-dark) 25%, transparent) 50%,
+		var(--color-bg-dark) 100%
+	);
+	gap: clamp(1rem, calc(1rem + 5vh), 5rem);
+}
+
+.menu__title {
+	color: var(--color-text-light);
+	text-shadow: 0 0 5px var(--color-bg-dark);
+	text-align: center;
+}
+
+.menu__list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.menu__item {
+	text-transform: capitalize;
+	text-shadow: 0 0 5px var(--color-bg-dark);
+	color: var(--color-text-light);
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.route-link:hover,
+.route-link:focus {
+	background-color: color-mix(in srgb, var(--color-primary) 75%, transparent);
+	padding-inline: 2rem;
+	clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+	outline: none;
+}

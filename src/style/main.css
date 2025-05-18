@@ -15,6 +15,17 @@
 	--secondary-color: #d7c9ae;
 }
 
+/* Typography Class */
+.main-title-size {
+	font-size: clamp(3rem, calc(2.5rem + 5vw), 8rem);
+}
+
+/* Spacing */
+.main-page-padding {
+	padding-block: clamp(1.5rem, calc(1rem + 5vh), 5rem);
+	padding-inline: clamp(2rem, calc(1rem + 5vw), 5rem);
+}
+
 /* Global Styles */
 * {
 	box-sizing: border-box;
@@ -42,6 +53,15 @@ li {
 	font-weight: 400;
 }
 
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
 :root {
 	color: var(--color-text-dark);
 	background: url(../assets/images/image-bg-menu.png);
@@ -50,4 +70,5 @@ li {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	font-family: var(--font-family-body);
+	max-height: 100vh;
 }
