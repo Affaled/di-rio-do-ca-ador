@@ -11,7 +11,7 @@ function setupKeyboardNavigation({
 
 	let currentIndex = 0;
 
-	function updateSelection(index) {
+	function updateSelection() {
 		$item.removeClass(selectedClass);
 		$item.eq(currentIndex).addClass(selectedClass).focus();
 	}
