@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+/* Variables */
+:root {
+	/* Typography */
+	--font-family-title: "Almendra", serif;
+	--font-family-body: "Almendra", sans-serif;
+
+	/* Colors */
+	--color-bg-dark: #2d2d2d;
+	--color-bg-light: #eae0d2;
+	--color-text-dark: #2d2d2d;
+	--color-text-light: #eae0d2;
+	--color-primary: #a68763;
+	--secondary-color: #d7c9ae;
+}
+
+/* Global Styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-family-title);
+	font-weight: 400;
+	font-style: italic;
+	text-transform: capitalize;
+}
+
+p,
+span,
+a,
+li {
+	font-family: var(--font-family-body);
+	font-weight: 400;
+}
+
+:root {
+	color: var(--color-text-dark);
+	background: url(../assets/images/image-bg-menu.png);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-family: var(--font-family-body);
+}
