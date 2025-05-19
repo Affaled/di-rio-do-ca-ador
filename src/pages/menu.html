@@ -10,13 +10,16 @@
 					<a href="/" class="route-link">Nova página</a>
 				</li>
 				<li class="menu__item">
+					<a href="/" class="route-link">Novo personagem</a>
+				</li>
+				<li class="menu__item">
 					<a href="/" class="route-link">Abrir diário</a>
 				</li>
 				<li class="menu__item">
 					<a href="/" class="route-link">Ver personagens</a>
 				</li>
 				<li class="menu__item">
-					<a href="/" class="route-link">Ver regras</a>
+					<a href="/" class="route-link">Como jogar</a>
 				</li>
 			</ul>
 		</nav>
@@ -26,6 +29,7 @@
 		setupKeyboardNavigation({
 			containerSelector: ".menu__list",
 			itemSelector: ".route-link",
+			selectedClass: "selected",
 			vertical: true,
 			onSelect: (item) => {
 				item.click();

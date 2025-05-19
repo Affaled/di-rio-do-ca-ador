@@ -5,24 +5,35 @@ function setupKeyboardNavigation({
 	vertical = true,
 	onSelect = () => {},
 }) {
-	const $container = $(containerSelector);
-	const $item = $container.find(itemSelector);
-	if ($item.length === 0) return;
+	const container = document.querySelector(containerSelector);
+	if (!container) return;
+
+	const items = container.querySelectorAll(itemSelector);
+	if (items.length === 0) return;
 
 	let currentIndex = 0;
 
 	function updateSelection() {
-		$item.removeClass(selectedClass);
-		$item.eq(currentIndex).addClass(selectedClass).focus();
+		items.forEach((item) => item.classList.remove(selectedClass));
+		items[currentIndex].classList.add(selectedClass);
+		items[currentIndex].focus();
 	}
 
-	$container.attr("tabindex", "0").focus();
+	items.forEach((item, index) => {
+		item.addEventListener("mouseenter", () => {
+			currentIndex = index;
+			updateSelection();
+		});
+	});
 
-	$(document).on("keydown", (e) => {
+	container.setAttribute("tabindex", "0");
+	container.focus();
+
+	document.addEventListener("keydown", (e) => {
 		const key = e.key;
 
-		if ((vertical && key === "ArrowUp") || (!vertical && key === "ArrowLeft")) {
-			currentIndex = (currentIndex - 1 + $item.length) % $item.length;
+		if ((vertical && key === "ArrowUp") || (!vertical && ley === "ArrowLeft")) {
+			currentIndex = (currentIndex - 1 + items.length) % items.length;
 			updateSelection();
 			e.preventDefault();
 		}
@@ -31,13 +42,13 @@ function setupKeyboardNavigation({
 			(vertical && key === "ArrowDown") ||
 			(!vertical && key === "ArrowRight")
 		) {
-			currentIndex = (currentIndex + 1) % $item.length;
+			currentIndex = (currentIndex + 1) % items.length;
 			updateSelection();
 			e.preventDefault();
 		}
 
-		if (key === "Enter") {
-			onSelect($item.eq(currentIndex).get(0));
+		if (key === "Enter" || key === " ") {
+			onSelect(items[currentIndex]);
 			e.preventDefault();
 		}
 	});

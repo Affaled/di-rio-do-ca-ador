@@ -39,18 +39,9 @@
 	outline: none;
 }
 
-.menu_nav:not(:has(.route-link:hover:not(:focus))) .route-link:focus,
-.route-link:hover {
+.route-link.selected {
 	background-color: color-mix(in srgb, var(--color-primary) 75%, transparent);
 	padding-inline: 2rem;
 	clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
 	outline: none;
 }
-
-/* .route-link:hover,
-.route-link:focus:not(.route-link:hover) {
-	background-color: color-mix(in srgb, var(--color-primary) 75%, transparent);
-	padding-inline: 2rem;
-	clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
-	outline: none;
-} */
