@@ -1,4 +1,4 @@
-import { rolld6 } from "./rolld6";
+import { rolld6 } from "../rolld6";
 
 class Character {
 	constructor(
