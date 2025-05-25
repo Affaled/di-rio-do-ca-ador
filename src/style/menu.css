@@ -6,12 +6,6 @@
 	width: 100%;
 	height: 100vh;
 	color: var(--color-text-light);
-	background: radial-gradient(
-		ellipse at center,
-		color-mix(in srgb, var(--color-bg-dark) 25%, transparent),
-		color-mix(in srgb, var(--color-bg-dark) 25%, transparent) 50%,
-		var(--color-bg-dark) 100%
-	);
 	gap: clamp(1rem, calc(1rem + 5vh), 5rem);
 }
 
@@ -37,12 +31,6 @@
 }
 
 .menu__tip {
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	color: var(--color-text-light);
 	font-size: 1.2rem;
 	line-height: 1rem;

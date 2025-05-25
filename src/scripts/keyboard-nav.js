@@ -28,6 +28,11 @@ function setupKeyboardNavigation({
 
 	$(document).on("keydown.keyboardNav", function (e) {
 		const key = e.key;
+		const tag = document.activeElement.tagName.toLowerCase();
+
+		if (["input", "textarea", "select"].includes(tag)) {
+			return;
+		}
 
 		if ((vertical && key === "ArrowUp") || (!vertical && key === "ArrowLeft")) {
 			currentIndex = (currentIndex - 1 + $items.length) % $items.length;

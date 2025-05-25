@@ -1,0 +1,115 @@
+.new-character {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
+	font-size: 1.2rem;
+	color: var(--color-text-light);
+}
+
+.new-character__content {
+	width: 100%;
+	height: 100%;
+}
+
+.new-character__form {
+	width: 100%;
+	height: 100%;
+}
+
+#new-character-form {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: start;
+	width: 100%;
+	height: 100%;
+}
+
+.new-character__first-cl {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	gap: 2rem;
+	padding-right: 16px;
+	width: 350px;
+	height: 100%;
+	border-right: 1px solid var(--color-text-light);
+}
+
+.new-character__basic-info {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.new-character__subtitle {
+	font-style: italic;
+	width: max-content;
+	padding: 4px 8px;
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+	border-bottom: 1px solid var(--color-text-light);
+}
+
+.new-character__second-cl {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+	gap: 2rem;
+	padding-inline: 16px;
+	width: 100%;
+	height: 100%;
+	border-right: 1px solid var(--color-text-light);
+}
+
+.new-character__first-cl label {
+	display: flex;
+	gap: 8px;
+	flex-direction: row;
+	width: 100%;
+}
+
+.new-character__first-cl label input,
+.new-character__first-cl label select {
+	min-width: none;
+	width: 100%;
+}
+
+.new-character__label {
+	min-width: max-content;
+}
+
+.new-character__title {
+	font-style: italic;
+	width: max-content;
+	padding: 4px 8px;
+	margin-bottom: 1rem;
+	background-color: transparent;
+	border: 2px solid var(--color-text-light);
+}
+
+.route-link {
+	padding-left: 0.5rem;
+}
+
+.route-link:focus {
+	outline: none;
+}
+
+.route-link.selected {
+	background-color: color-mix(in srgb, var(--color-primary) 75%, transparent);
+	padding-right: 2rem;
+	clip-path: polygon(0 0%, 100% 0%, 85% 100%, 0% 100%);
+	outline: none;
+}
+
+label {
+	margin-bottom: 0.25rem;
+}

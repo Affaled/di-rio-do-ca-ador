@@ -32,6 +32,25 @@
 	height: 1.8rem;
 }
 
+/* Interface */
+.navigation-guide {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.shadow-background {
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--color-bg-dark) 25%, transparent),
+		color-mix(in srgb, var(--color-bg-dark) 25%, transparent) 50%,
+		var(--color-bg-dark) 100%
+	);
+}
+
 /* Global Styles */
 * {
 	box-sizing: border-box;
@@ -77,4 +96,34 @@ a {
 	background-attachment: fixed;
 	font-family: var(--font-family-body);
 	max-height: 100vh;
+}
+
+input {
+	font-family: var(--font-family-body);
+	font-weight: 400;
+	background-color: color-mix(in srgb, var(--color-bg-dark) 50%, transparent);
+	border: none;
+	font-size: 16px;
+	border-radius: 4px;
+	padding: 2px 4px;
+	color: var(--color-text-light);
+}
+
+input:focus {
+	outline: none;
+}
+
+select {
+	font-family: var(--font-family-body);
+	font-weight: 400;
+	background-color: color-mix(in srgb, var(--color-bg-dark) 50%, transparent);
+	border: none;
+	font-size: 16px;
+	border-radius: 4px;
+	padding: 2px 4px;
+	color: var(--color-text-light);
+}
+
+select:focus {
+	outline: none;
 }

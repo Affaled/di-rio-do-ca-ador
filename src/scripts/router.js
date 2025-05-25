@@ -23,7 +23,7 @@ function handleLocation() {
 }
 
 $(document).ready(function () {
-	window.onpopstate = handleLocation;
+	window.onhashchange = handleLocation;
 	window.route = route;
 
 	$(document).on("click", "a.route-link", function (e) {
