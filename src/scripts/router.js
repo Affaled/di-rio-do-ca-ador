@@ -1,24 +1,20 @@
 const routes = {
 	404: "/pages/404.html",
 	"/": "src/pages/menu.html",
-	"/basic-set": "src/pages/basic-set.html",
+	"/modulo-basico": "src/pages/basic-set.html",
+	"/lista-de-personagens": "src/pages/character-list.html",
+	"/novo-personagem": "src/pages/new-character.html",
 };
 
 function route(event) {
 	event = event || window.event;
 	event.preventDefault();
-	window.history.pushState({}, "", event.target.href);
-	handleLocation();
+	const href = event.target.getAttribute("href");
+	window.location.hash = href;
 }
 
 function handleLocation() {
-	let path = window.location.pathname;
-
-	if (path === "/index.html") {
-		window.history.replaceState({}, "", "/");
-		path = "/";
-	}
-
+	let path = window.location.hash.replace(/^#/, "") || "/";
 	const routePath = routes[path] || routes[404];
 
 	$.get(routePath, function (html) {
