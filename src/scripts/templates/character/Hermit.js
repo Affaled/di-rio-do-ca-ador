@@ -1,0 +1,1 @@
+class Hermit extends Character {}

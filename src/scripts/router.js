@@ -2,7 +2,6 @@ const routes = {
 	404: "/pages/404.html",
 	"/": "src/pages/menu.html",
 	"/modulo-basico": "src/pages/basic-set.html",
-	"/lista-de-personagens": "src/pages/character-list.html",
 	"/novo-personagem": "src/pages/new-character.html",
 };
 
