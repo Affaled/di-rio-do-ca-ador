@@ -30,3 +30,23 @@ export const ArcoComposto = new Weapon(
 	2,
 	{ arrows: true }
 );
+
+export const Machado = new Weapon(
+	"Machado",
+	"Uma ferramenta afiada, ideal para cortar madeira e atacar inimigos.",
+	{ [Minerio.nome]: 9 },
+	{ normal: 6 },
+	"melee",
+	2,
+	{ heavy: true }
+);
+
+export const ArcoSimples = new Weapon(
+	"Arco Simples",
+	"Um arco básico feito de madeira, adequado para iniciantes.",
+	{ [Minerio.nome]: 2 },
+	{ normal: 2 },
+	"ranged",
+	2,
+	{ arrows: true }
+);
