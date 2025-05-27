@@ -9,7 +9,12 @@ class Item {
 	}
 
 	isConsumable() {
-		return this.slotType === "potion" || this.slotType === "arrow";
+		return (
+			this.slotType === "potion" ||
+			this.slotType === "arrow" ||
+			this.slotType === "utility" ||
+			this.slotType === "material"
+		);
 	}
 
 	isEquippable() {
@@ -94,6 +99,12 @@ class Arrow extends Item {}
 
 class Utility extends Item {}
 
+class Material extends Item {
+	constructor(name, description) {
+		super(name, description, "material");
+	}
+}
+
 export {
 	Item,
 	Weapon,
@@ -105,4 +116,5 @@ export {
 	Potion,
 	Arrow,
 	Utility,
+	Material,
 };

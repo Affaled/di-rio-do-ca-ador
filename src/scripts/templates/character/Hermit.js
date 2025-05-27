@@ -1,4 +1,7 @@
 import Character from "./Character.js";
+import { Sabre, Adaga, ArcoComposto } from "../../../database/Weapons.js";
+import { PoçãoDeVida } from "../../../database/Potions.js";
+import { ArmaduraDeCouro } from "../../../database/Armors.js";
 
 export default class Hermit extends Character {
 	static profession = "Eremita";
@@ -17,6 +20,14 @@ export default class Hermit extends Character {
 		},
 	];
 	static initialMaxLifePoints = 22;
+	static initialItens = [
+		Sabre,
+		Adaga,
+		ArcoComposto,
+		ArmaduraDeCouro,
+		PoçãoDeVida,
+		PoçãoDeVida,
+	];
 
 	constructor(name) {
 		super(
@@ -26,5 +37,9 @@ export default class Hermit extends Character {
 			Hermit.initialAdvantages,
 			Hermit.initialMaxLifePoints
 		);
+
+		Hermit.initialItens.forEach((item) => {
+			this.backpack.addItem(item);
+		});
 	}
 }

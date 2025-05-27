@@ -11,7 +11,7 @@ export default class Character {
 		this.lifePoints = maxLifePoints;
 
 		this.weariness = 0;
-		this.packpack = new Backpack();
+		this.backpack = new Backpack();
 		this.equipment = new Equipment();
 	}
 }
