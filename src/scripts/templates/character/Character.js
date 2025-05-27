@@ -1,7 +1,7 @@
 import { Backpack } from "../Backpack.js";
 import { Equipment } from "../Equipment.js";
 
-class Character {
+export default class Character {
 	constructor(name, profession, attributes, advantages, maxLifePoints) {
 		this.name = name;
 		this.profession = profession;

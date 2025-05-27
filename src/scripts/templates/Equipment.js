@@ -1,4 +1,4 @@
-class Equipment {
+export default class Equipment {
 	constructor() {
 		this.slots = {
 			helmet: null,

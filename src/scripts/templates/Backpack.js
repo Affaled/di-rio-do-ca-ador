@@ -1,1 +1,1 @@
-class Backpack {}
+export default class Backpack {}
