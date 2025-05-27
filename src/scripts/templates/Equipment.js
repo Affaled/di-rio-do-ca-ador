@@ -12,7 +12,7 @@ export default class Equipment {
 
 	equip(item) {
 		const slot = item.slotType;
-		if (slot === weapons) {
+		if (slot === weapon) {
 			const emptyIndex = this.slots.weapons.findIndex((w) => w === null);
 			if (emptyIndex === -1) {
 				throw new Error("Todos os espaços de armas já estão ocupados.");
@@ -32,7 +32,7 @@ export default class Equipment {
 	}
 
 	unequip(slot, index = null) {
-		if (slot === "weapons") {
+		if (slot === "weapon") {
 			if (index === null || index < 0 || index >= this.slots.weapons.length) {
 				throw new Error("Índice inválido de slot para armas.");
 			}

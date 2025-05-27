@@ -7,12 +7,25 @@ class Item {
 
 		this.equipped = false;
 	}
+
+	isConsumable() {
+		return this.slotType === "potion" || this.slotType === "arrow";
+	}
+
+	isEquippable() {
+		return (
+			this.slotType === "weapons" ||
+			this.slotType === "helmet" ||
+			this.slotType === "armor" ||
+			this.slotType === "bracelets" ||
+			this.slotType === "boots" ||
+			this.slotType === "shield"
+		);
+	}
 }
 
 class Weapon extends Item {
 	constructor(name, description, craft, damage, range, hands, features = {}) {
-		const slotType = "weapons";
-
 		this.damage = damage;
 		this.range = range;
 		this.hands = hands;
@@ -22,28 +35,52 @@ class Weapon extends Item {
 			heavy: false,
 			torque: false,
 			arrows: false,
+			...features,
 		};
 
-		super(name, description, slotType, craft);
+		super(name, description, "weapon", craft);
 	}
 }
 
 class Helmet extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		const slotType = "helmet";
 		this.protectionPoints = protectionPoints;
 
 		super(name, description, "helmet", craft);
 	}
 }
 
-class Armor extends Item {}
+class Armor extends Item {
+	constructor(name, description, craft, protectionPoints) {
+		this.protectionPoints = protectionPoints;
 
-class Bracelet extends Item {}
+		super(name, description, "armor", craft);
+	}
+}
 
-class Boots extends Item {}
+class Bracelet extends Item {
+	constructor(name, description, craft, protectionPoints) {
+		this.protectionPoints = protectionPoints;
 
-class Shield extends Item {}
+		super(name, description, "bracelets", craft);
+	}
+}
+
+class Boots extends Item {
+	constructor(name, description, craft, protectionPoints) {
+		this.protectionPoints = protectionPoints;
+
+		super(name, description, "boots", craft);
+	}
+}
+
+class Shield extends Item {
+	constructor(name, description, craft, protectionPoints) {
+		this.protectionPoints = protectionPoints;
+
+		super(name, description, "shield", craft);
+	}
+}
 
 class Potion extends Item {
 	constructor(name, description, craft, effect) {
