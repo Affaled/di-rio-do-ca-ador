@@ -28,6 +28,7 @@ export default class Hermit extends Character {
 		PoçãoDeVida,
 		PoçãoDeVida,
 	];
+	static image = "/src/assets/images/hermit-image.jpg";
 
 	constructor(name) {
 		super(
@@ -35,7 +36,8 @@ export default class Hermit extends Character {
 			Hermit.profession,
 			Hermit.initialAttributes,
 			Hermit.initialAdvantages,
-			Hermit.initialMaxLifePoints
+			Hermit.initialMaxLifePoints,
+			Hermit.image
 		);
 
 		Hermit.initialItens.forEach((item) => {
