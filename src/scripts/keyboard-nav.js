@@ -23,7 +23,6 @@ function setupKeyboardNavigation({
 
 	$container.attr("tabindex", "0").focus();
 
-	// Remove qualquer handler anterior para evitar duplicidade
 	$(document).off("keydown.keyboardNav");
 
 	$(document).on("keydown.keyboardNav", function (e) {

@@ -17,13 +17,20 @@
 
 /* Typography Class */
 .main-title-size {
-	font-size: clamp(3rem, calc(2.5rem + 5vw), 8rem);
+	font-size: clamp(3rem, calc(3rem + 5vw), 10rem);
 }
 
 /* Spacing */
 .main-page-padding {
 	padding-block: clamp(1.5rem, calc(1rem + 5vh), 5rem);
 	padding-inline: clamp(2rem, calc(1rem + 5vw), 5rem);
+}
+
+@media (max-width: 1024px) {
+	.main-page-padding {
+		padding-block: clamp(1.5rem, calc(1rem + 5vh), 3rem);
+		padding-inline: clamp(2rem, calc(1rem + 5vw), 3rem);
+	}
 }
 
 /* Icons */
@@ -49,6 +56,26 @@
 		color-mix(in srgb, var(--color-bg-dark) 25%, transparent) 50%,
 		var(--color-bg-dark) 100%
 	);
+}
+
+/* Menu */
+.route-link {
+	font-size: 1.6rem;
+	line-height: 1.8;
+	padding: 0.25rem 1.5rem 0.25rem 1.5rem;
+	color: var(--color-text-light);
+	text-align: center;
+	text-transform: capitalize;
+	clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+}
+
+.route-link:focus {
+	outline: none;
+}
+
+.route-link.selected {
+	background-color: color-mix(in srgb, var(--color-primary) 75%, transparent);
+	color: var(--color-text-light);
 }
 
 /* Global Styles */

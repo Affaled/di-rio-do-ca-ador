@@ -17,17 +17,15 @@ export default class Equipment {
 			if (emptyIndex === -1) {
 				throw new Error("Todos os espaços de armas já estão ocupados.");
 			}
-			this.slots.weapons[emptyIndex] = item;
-			/* item equipado no slot de armas */
+			this.slots.weapons[emptyIndex] = item; //item equipado no slot de armas
 		} else {
 			if (!this.slots.hasOwnProperty(slot)) {
 				throw new Error(`Slot ${slot} não existe.`);
 			}
 			if (this.slots[slot]) {
-				/* subsitui o slot já ocupado */
+				// subsitui o slot já ocupado
 			}
-			this.slots[slot] = item;
-			/* item equipado no slot */
+			this.slots[slot] = item; // item equipado no slot
 		}
 	}
 
@@ -45,8 +43,7 @@ export default class Equipment {
 				this.slots[slot] = null;
 				return item;
 			}
-			return null;
-			/* Slot já está vazio */
+			return null; // Slot já está vazio
 		}
 	}
 }

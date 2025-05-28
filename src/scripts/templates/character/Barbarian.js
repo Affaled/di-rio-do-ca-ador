@@ -21,5 +21,20 @@ export default class Barbarian extends Character {
 	];
 	static initialMaxLifePoints = 30;
 	static initialItens = [Machado, ArcoSimples, PoçãoDeVida, PoçãoDeVida];
-	static image = "/src/assets/images/barbarian-image.jpg";
+	static image = "/src/assets/images/barbarian-image.png";
+
+	constructor(name) {
+		super(
+			name,
+			Barbarian.profession,
+			Barbarian.initialAttributes,
+			Barbarian.initialAdvantages,
+			Barbarian.initialMaxLifePoints,
+			Barbarian.image
+		);
+
+		Barbarian.initialItens.forEach((item) => {
+			this.backpack.addItem(item);
+		});
+	}
 }
