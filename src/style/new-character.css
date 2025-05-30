@@ -88,6 +88,10 @@
 	width: 100%;
 }
 
+.new-character__label span {
+	text-wrap: nowrap;
+}
+
 .new-character__header {
 	display: flex;
 	flex-direction: row;
@@ -134,6 +138,18 @@ label {
 	gap: 0.5rem;
 }
 
+#pet-abilities {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+	margin-block: 0.5rem;
+	padding-block: 0.5rem;
+	padding-inline: 0.5rem;
+	background-color: color-mix(in srgb, var(--color-bg-dark) 15%, transparent);
+	gap: 0.5rem;
+}
+
 .new-character__advantage-name {
 	font-size: 1.2rem;
 }
@@ -141,4 +157,8 @@ label {
 .new-character__advantage-text {
 	font-size: 1rem;
 	padding-left: 0.5rem;
+}
+
+#character-pet {
+	width: 100%;
 }

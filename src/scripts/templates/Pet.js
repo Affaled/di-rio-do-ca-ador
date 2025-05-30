@@ -30,9 +30,12 @@ export class FightingPet extends Pet {
 	static type = "Lutador";
 	static maxLifePoints = 10;
 	static damage = { normal: 2 };
+	static abilities = [];
 
 	constructor() {
 		super(FightingPet.type, FightingPet.maxLifePoints, FightingPet.damage);
+
+		this.abilities = FightingPet.abilities;
 	}
 }
 
@@ -40,15 +43,16 @@ export class TrackerPet extends Pet {
 	static type = "Rastreador";
 	static maxLifePoints = 10;
 	static damage = { normal: 1 };
-
-	constructor() {
-		super(TrackerPet.type, TrackerPet.maxLifePoints, TrackerPet.damage);
-	}
-
 	static abilities = [
 		{
 			name: "Rastreamento",
 			description: "Pode rolar o dado novamente uma vez ao rastrear.",
 		},
 	];
+
+	constructor() {
+		super(TrackerPet.type, TrackerPet.maxLifePoints, TrackerPet.damage);
+
+		this.abilities = TrackerPet.abilities;
+	}
 }
