@@ -21,7 +21,7 @@ export default class Hermit extends Character {
 		},
 	];
 	static initialMaxLifePoints = 22;
-	static initialItens = [
+	static initialItems = [
 		Sabre,
 		Adaga,
 		ArcoComposto,
@@ -41,7 +41,7 @@ export default class Hermit extends Character {
 			Hermit.image
 		);
 
-		Hermit.initialItens.forEach((item) => {
+		Hermit.initialItems.forEach((item) => {
 			this.backpack.addItem(item);
 		});
 

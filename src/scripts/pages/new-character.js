@@ -8,6 +8,7 @@ $(document).ready(function () {
 	const characterLife = $("#character-life");
 	const characterAdvantages = $("#character-advantages");
 	const characterPetBlock = $("#character-pet-block");
+	const characterBackpack = $("#character-backpack");
 
 	const professionMap = {
 		barbarian: Barbarian,
@@ -50,6 +51,23 @@ $(document).ready(function () {
 					<li class="new-character__advantage">
 						<div class="new-character__advantage-name">${initialAdvantage.name}:</div>
 						<div class="new-character__advantage-text">${initialAdvantage.description}</div>
+					</li>
+					`
+				);
+			});
+		}
+	}
+
+	function updateBackpack() {
+		const selectedProfession = $(professionSelect).val();
+		const professionClass = professionMap[selectedProfession];
+		if (professionClass) {
+			$(characterBackpack).empty();
+			professionClass.initialItems.forEach((initialItem) => {
+				$(characterBackpack).append(
+					`
+					<li class="new-character__item">
+						<div class="new-character__item-name --${initialItem.slotType}">${initialItem.name}</div>
 					</li>
 					`
 				);
@@ -129,15 +147,16 @@ $(document).ready(function () {
 		updateLife();
 		updateAdvantages();
 		selectPet();
-		updatePetInfo;
+		updatePetInfo();
+		updateBackpack();
 	});
 
 	$("#character-pet").on("change", updatePetInfo);
-	updatePetInfo();
 
 	updateImage();
 	updateLife();
 	updateAdvantages();
 	selectPet();
 	updatePetInfo();
+	updateBackpack();
 });

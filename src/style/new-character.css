@@ -104,6 +104,11 @@
 	padding-left: 0.5rem;
 }
 
+.new-character__item {
+	padding: 0.25rem 0;
+	margin-block: 0.25rem;
+}
+
 .new-character__header {
 	display: flex;
 	flex-direction: row;

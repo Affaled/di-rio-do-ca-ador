@@ -20,7 +20,7 @@ export default class Barbarian extends Character {
 		},
 	];
 	static initialMaxLifePoints = 30;
-	static initialItens = [Machado, ArcoSimples, PoçãoDeVida, PoçãoDeVida];
+	static initialItems = [Machado, ArcoSimples, PoçãoDeVida, PoçãoDeVida];
 	static image = "/src/assets/images/barbarian-image.png";
 
 	constructor(name) {
@@ -33,7 +33,7 @@ export default class Barbarian extends Character {
 			Barbarian.image
 		);
 
-		Barbarian.initialItens.forEach((item) => {
+		Barbarian.initialItems.forEach((item) => {
 			this.backpack.addItem(item);
 		});
 	}

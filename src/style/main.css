@@ -13,6 +13,12 @@
 	--color-text-light: #eae0d2;
 	--color-primary: #a68763;
 	--secondary-color: #d7c9ae;
+	--color-item-weapon: #792e29;
+	--color-item-arrow: #aba38f;
+	--color-item-armor: #24201d;
+	--color-item-shield: #24201d;
+	--color-item-potion: #565538;
+	--color-item-material: #aba38f;
 }
 
 /* Global Reset */
