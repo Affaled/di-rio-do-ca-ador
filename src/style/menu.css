@@ -3,18 +3,21 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 1366px;
-	height: 768px;
+	width: 100%;
+	height: 100%;
 	gap: 2rem;
+	padding: 2.5rem 5rem;
 }
 
 .menu__title {
 	text-align: center;
 	color: var(--color-text-light);
 	font-style: italic;
+	font-size: 140px;
 }
 
 .menu__list {
+	font-size: 1.5rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

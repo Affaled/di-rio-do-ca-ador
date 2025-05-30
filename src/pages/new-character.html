@@ -2,56 +2,52 @@
 	<link rel="stylesheet" href="./src/style/new-character.css" />
 </div>
 
-<section class="new-character shadow-background main-page-padding">
-	<div class="new-character__content paper-background">
-		<form id="character-create">
-			<div class="new-character__column">
-				<div class="new-character__column-container">
-					<header class="new-character__header">
-						<h1 class="new-character__header-title">Criar novo personagem</h1>
-						<div class="new-character__header-line"></div>
-					</header>
-					<label class="new-character__label" for="character-name">
-						<span>Nome</span>
-						<input type="text" id="character-name" required />
-					</label>
-					<label class="new-character__label" for="new-character-profession">
-						<span>Profissão</span>
-						<select name="" id="character-profession" required>
-							<option value="barbarian">Bárbaro</option>
-							<option value="hermit">Eremita</option>
-						</select>
-					</label>
-				</div>
-				<div class="new-character__column-container">
-					<header class="new-character__header">
-						<h2 class="new-character__header-title">
-							Vantagens e Desvantagens
-						</h2>
-						<div class="new-character__header-line"></div>
-					</header>
-					<div class="new-character__container--row">
-						<label class="new-character__label" for="character-life">
-							<span>Vida</span>
-							<input type="number" id="character-life" disabled />
-						</label>
-						<label class="new-character__label" for="character-weariness">
-							<span>Fadiga</span>
-							<input
-								type="number"
-								id="character-weariness"
-								placeholder="0"
-								disabled />
-						</label>
-					</div>
-					<ul id="character-advantages"></ul>
-				</div>
-				<div id="character-pet-block"></div>
+<section class="new-character">
+	<form class="new-character__content" id="character-create">
+		<div class="new-character__column">
+			<div class="new-character__container">
+				<header class="new-character__header">
+					<h1 class="new-character__header-title">Criar novo personagem</h1>
+					<div class="new-character__header-line"></div>
+				</header>
+				<label class="new-character__label" for="character-name">
+					<span>Nome</span>
+					<input type="text" id="character-name" required />
+				</label>
+				<label class="new-character__label" for="new-character-profession">
+					<span>Profissão</span>
+					<select name="" id="character-profession" required>
+						<option value="barbarian">Bárbaro</option>
+						<option value="hermit">Eremita</option>
+					</select>
+				</label>
 			</div>
-			<div class="new-character__column"></div>
-		</form>
-	</div>
-	<div class="new-character__image paper-background">
+			<div class="new-character__container">
+				<header class="new-character__header">
+					<h2 class="new-character__header-title">Vantagens e Desvantagens</h2>
+					<div class="new-character__header-line"></div>
+				</header>
+				<div class="new-character__container--row">
+					<label class="new-character__label" for="character-life">
+						<span>Vida</span>
+						<input type="number" id="character-life" disabled />
+					</label>
+					<label class="new-character__label" for="character-weariness">
+						<span>Fadiga</span>
+						<input
+							type="number"
+							id="character-weariness"
+							placeholder="0"
+							disabled />
+					</label>
+				</div>
+				<ul class="new-character__advantages" id="character-advantages"></ul>
+			</div>
+			<div class="new-character__container" id="character-pet-block"></div>
+		</div>
+		<div class="new-character__column"></div>
+	</form>
+	<div class="new-character__image">
 		<img src="/" id="character-profession-image" alt="New Character" />
 	</div>
 </section>

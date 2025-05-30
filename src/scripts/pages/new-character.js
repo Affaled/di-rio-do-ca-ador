@@ -89,7 +89,7 @@ $(document).ready(function () {
 								disabled />
 					</label>
 				</div>
-				<ul id="pet-abilities"></ul>
+				<ul class="new-character__advantages--pet" id="pet-abilities"></ul>
 				`
 			);
 
@@ -114,9 +114,9 @@ $(document).ready(function () {
 			petType.abilities?.forEach((ability) => {
 				$(petAbilities).append(
 					`
-                <li class="new-character__advantage">
-                    <div class="new-character__advantage-name">${ability.name}:</div>
-                    <div class="new-character__advantage-text">${ability.description}</div>
+                <li class="new-character__advantage--pet">
+                    <div class="new-character__advantage-name--pet">${ability.name}:</div>
+                    <div class="new-character__advantage-text--pet">${ability.description}</div>
                 </li>
                 `
 				);
