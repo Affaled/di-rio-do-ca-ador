@@ -1,0 +1,144 @@
+.new-character {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	gap: 0rem;
+}
+
+.new-character__content {
+	position: relative;
+	flex-grow: 1;
+	height: 100%;
+}
+
+.new-character__content::before {
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--color-bg-dark) 0%, transparent) 50%,
+		color-mix(in srgb, var(--color-bg-dark) 40%, transparent) 100%
+	);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.new-character__image {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 450px;
+	height: 100%;
+}
+
+.new-character__image::before {
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--color-bg-dark) 0%, transparent) 40%,
+		color-mix(in srgb, var(--color-bg-dark) 40%, transparent) 100%
+	);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.paper-background {
+	background-image: url("/src/assets/images/old-paper-texture.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+#character-profession-image {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#character-create {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+}
+
+.new-character__column {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	padding-inline: 1rem;
+	gap: 2.25rem;
+}
+
+.new-character__label {
+	width: 100%;
+}
+
+.new-character__header {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding-bottom: 0.5rem;
+	flex-wrap: nowrap;
+	gap: 0.5rem;
+}
+
+.new-character__header-title {
+	text-wrap: nowrap;
+}
+
+.new-character__header-line {
+	height: 1px;
+	width: 100%;
+	background-color: color-mix(in srgb, var(--color-bg-dark) 50%, transparent);
+}
+
+label {
+	margin-bottom: 0.25rem;
+}
+
+.new-character__container--row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: stretch;
+	width: 100%;
+	gap: 1.5rem;
+}
+
+#character-advantages {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+	margin-block: 0.5rem;
+	padding-block: 0.5rem;
+	padding-inline: 0.5rem;
+	background-color: color-mix(in srgb, var(--color-bg-dark) 15%, transparent);
+	gap: 0.5rem;
+}
+
+.new-character__advantage-name {
+	font-size: 1.2rem;
+}
+
+.new-character__advantage-text {
+	font-size: 1rem;
+	padding-left: 0.5rem;
+}

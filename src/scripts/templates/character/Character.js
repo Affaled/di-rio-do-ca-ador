@@ -1,5 +1,5 @@
-import { Backpack } from "../Backpack.js";
-import { Equipment } from "../Equipment.js";
+import "../Backpack.js";
+import "../Equipment.js";
 
 export default class Character {
 	constructor(name, profession, attributes, advantages, maxLifePoints, image) {

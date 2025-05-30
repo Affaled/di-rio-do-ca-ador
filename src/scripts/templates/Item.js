@@ -31,6 +31,8 @@ class Item {
 
 class Weapon extends Item {
 	constructor(name, description, craft, damage, range, hands, features = {}) {
+		super(name, description, "weapon", craft);
+
 		this.damage = damage;
 		this.range = range;
 		this.hands = hands;
@@ -42,56 +44,54 @@ class Weapon extends Item {
 			arrows: false,
 			...features,
 		};
-
-		super(name, description, "weapon", craft);
 	}
 }
 
 class Helmet extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		this.protectionPoints = protectionPoints;
-
 		super(name, description, "helmet", craft);
+
+		this.protectionPoints = protectionPoints;
 	}
 }
 
 class Armor extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		this.protectionPoints = protectionPoints;
-
 		super(name, description, "armor", craft);
+
+		this.protectionPoints = protectionPoints;
 	}
 }
 
 class Bracelet extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		this.protectionPoints = protectionPoints;
-
 		super(name, description, "bracelets", craft);
+
+		this.protectionPoints = protectionPoints;
 	}
 }
 
 class Boots extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		this.protectionPoints = protectionPoints;
-
 		super(name, description, "boots", craft);
+
+		this.protectionPoints = protectionPoints;
 	}
 }
 
 class Shield extends Item {
 	constructor(name, description, craft, protectionPoints) {
-		this.protectionPoints = protectionPoints;
-
 		super(name, description, "shield", craft);
+
+		this.protectionPoints = protectionPoints;
 	}
 }
 
 class Potion extends Item {
 	constructor(name, description, craft, effect) {
-		this.effect = effect;
-
 		super(name, description, "potion", craft);
+
+		this.effect = effect;
 	}
 }
 
