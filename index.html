@@ -2,14 +2,23 @@
 <html lang="pt-BR">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<link rel="stylesheet" href="./src/style/main.css" />
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="./src/scripts/router.js"></script>
+		<script src="./src/scripts/game-scale.js"></script>
 		<script src="./src/scripts/keyboard-nav.js"></script>
 		<title>Diário do Caçador</title>
 	</head>
 	<body>
 		<div id="root"></div>
 	</body>
+	<script>
+		$(document).ready(function () {
+			setupGameScale();
+		});
+	</script>
 </html>
