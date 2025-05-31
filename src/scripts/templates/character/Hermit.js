@@ -46,13 +46,13 @@ export default class Hermit extends Character {
 		});
 
 		switch (petType) {
-			case "Voador":
+			case "FlyingPet":
 				this.pet = new FlyingPet();
 				break;
-			case "Lutador":
+			case "FightingPet":
 				this.pet = new FightingPet();
 				break;
-			case "Rastreador":
+			case "TrackerPet":
 				this.pet = new TrackerPet();
 				break;
 			default:

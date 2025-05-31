@@ -165,3 +165,12 @@
 .new-character__label > select > option {
 	width: 100%;
 }
+
+.new-character__button {
+	background: var(--color-primary);
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.5rem;
+	border: none;
+	cursor: pointer;
+	color: var(--color-text-light);
+}

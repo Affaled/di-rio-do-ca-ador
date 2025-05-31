@@ -10,6 +10,44 @@ $(document).ready(function () {
 	const characterPetBlock = $("#character-pet-block");
 	const characterBackpack = $("#character-backpack");
 
+	$("#character-create").on("submit", function (e) {
+		e.preventDefault();
+
+		const name = $("#character-name").val();
+		const professionKey = $("#character-profession").val();
+		let character;
+
+		if (professionKey === "barbarian") {
+			character = new Barbarian(name);
+		} else if (professionKey === "hermit") {
+			const petType = $("#character-pet").val() || "FlyingPet";
+
+			character = new Hermit(name, petType);
+		}
+
+		const characterData = {
+			name: character.name,
+			profession: character.profession,
+			attributes: character.attributes,
+			advantages: character.advantages,
+			maxLifePoints: character.maxLifePoints,
+			image: character.image,
+			backpack: character.backpack.items,
+			pet: character.pet
+				? {
+						type: character.pet.type,
+						maxLifePoints: character.pet.maxLifePoints,
+						damage: character.pet.damage,
+						abilities: character.pet.abilities,
+				  }
+				: null,
+		};
+
+		localStorage.setItem("characters", JSON.stringify([characterData]));
+		alert("Personagem criado e salvo!");
+		window.location.hash = "/jogo";
+	});
+
 	const professionMap = {
 		barbarian: Barbarian,
 		hermit: Hermit,

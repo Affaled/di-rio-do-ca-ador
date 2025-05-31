@@ -3,6 +3,7 @@ const routes = {
 	"/": "src/pages/menu.html",
 	"/modulo-basico": "src/pages/basic-set.html",
 	"/novo-personagem": "src/pages/new-character.html",
+	"/jogo": "src/pages/game.html",
 };
 
 function route(event) {
