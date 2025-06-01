@@ -13,6 +13,8 @@ $(document).ready(function () {
 	$("#character-create").on("submit", function (e) {
 		e.preventDefault();
 
+		localStorage.clear();
+
 		const name = $("#character-name").val();
 		const professionKey = $("#character-profession").val();
 		let character;
@@ -43,7 +45,7 @@ $(document).ready(function () {
 				: null,
 		};
 
-		localStorage.setItem("characters", JSON.stringify([characterData]));
+		localStorage.setItem("character", JSON.stringify(characterData));
 		alert("Personagem criado e salvo!");
 		window.location.hash = "/jogo";
 	});

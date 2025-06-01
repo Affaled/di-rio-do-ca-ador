@@ -1,0 +1,40 @@
+.game {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 2.5rem 5rem;
+}
+
+.game__content {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	padding: 1rem;
+	height: 100%;
+	background-image: url("/src/assets/images/old-paper-texture.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.game__content::before {
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--color-bg-dark) 0%, transparent) 50%,
+		color-mix(in srgb, var(--color-bg-dark) 40%, transparent) 100%
+	);
+	pointer-events: none;
+	z-index: 0;
+}
