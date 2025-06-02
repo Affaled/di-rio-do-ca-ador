@@ -1,6 +1,7 @@
 import Barbarian from "../templates/character/Barbarian.js";
 import Hermit from "../templates/character/Hermit.js";
 import { FlyingPet, FightingPet, TrackerPet } from "../templates/Pet.js";
+import { saveToLocal } from "../local-saves.js";
 
 $(document).ready(function () {
 	const professionSelect = $("#character-profession");
@@ -45,7 +46,7 @@ $(document).ready(function () {
 				: null,
 		};
 
-		localStorage.setItem("character", JSON.stringify(characterData));
+		saveToLocal("character", characterData);
 		alert("Personagem criado e salvo!");
 		window.location.hash = "/jogo";
 	});

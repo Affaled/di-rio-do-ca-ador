@@ -19,7 +19,7 @@ class Item {
 
 	isEquippable() {
 		return (
-			this.slotType === "weapons" ||
+			this.slotType === "weapon" ||
 			this.slotType === "helmet" ||
 			this.slotType === "armor" ||
 			this.slotType === "bracelets" ||
