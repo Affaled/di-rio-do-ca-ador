@@ -9,6 +9,31 @@ import Hermit from "/src/scripts/templates/character/Hermit.js";
 
 $(document).ready(function () {
 	const data = loadFromLocal("character") || null;
+	let save = loadFromLocal("save");
+	let locationDetails;
+
+	if (!save) {
+		const locationDetails = setLocation();
+		const saveData = {
+			cityName: locationDetails.name,
+			citySize: {
+				name: locationDetails.size.name,
+				description: locationDetails.size.description,
+			},
+			cityType: {
+				name: locationDetails.type.name,
+				description: locationDetails.type.description,
+			},
+		};
+		saveToLocal("save", saveData);
+	} else {
+		locationDetails = {
+			name: save.cityName,
+			size: save.citySize,
+			type: save.cityType,
+		};
+	}
+
 	let character;
 
 	if (!data) {
@@ -44,10 +69,8 @@ $(document).ready(function () {
 		character.pet.abilities = data.pet.abilities;
 	}
 
-	const locationDetails = setLocation();
-
 	$(".game__location").html(`
-		<p>Cidade: ${locationDetails.name}</p>
+		<p>Cidade: ${save.cityName}</p>
 		<p>${locationDetails.size.name}: ${locationDetails.size.description}</p>
 		<p>${locationDetails.type.name}: ${locationDetails.type.description}</p>
 		`);
