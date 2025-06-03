@@ -54,6 +54,34 @@ $(document).ready(function () {
 
 	$(".game__character").html(`
 		<p>Nome: ${character.name}</p>
-		<p>Classe: ${character.profession}</p>
+		<p>Profissão: ${character.profession}</p>
+		<p>Pet: ${character.pet ? character.pet.type : "Nenhum"}</p>
+		<div style="display: flex; width: 100%; gap: 0.5rem; align-items: center;">
+        <label>Vida:</label>
+        <div class="bar bar--life">
+		<div class="bar__fill" style="width: ${
+			(character.lifePoints / character.maxLifePoints) * 100
+		}%"></div>
+        </div>
+		</div>
+        <span>${character.lifePoints} / ${character.maxLifePoints}</span>
+		</div>
+			<div style="display: flex; width: 100%; gap: 0.5rem; align-items: center;">
+        <label>Estamina:</label>
+        <div class="bar bar--stamina">
+            <div class="bar__fill" style="width: ${
+							(character.weariness !== undefined
+								? (6 - character.weariness) / 6
+								: 1) * 100
+						}%"></div>
+        </div>
+		</div>
+        <span>${character.weariness || 0} / 6</span>
+    	</div>
+		`);
+	$(".game__backpack").html(`
+		<ul>
+			${character.backpack.items.map((item) => `<li>${item.name}</li>`).join("")}
+		</ul>
 		`);
 });
