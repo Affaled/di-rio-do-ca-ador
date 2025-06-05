@@ -6,14 +6,19 @@ import {
 import setLocation from "/src/scripts/set-location.js";
 import Barbarian from "/src/scripts/templates/character/Barbarian.js";
 import Hermit from "/src/scripts/templates/character/Hermit.js";
+import Rexian from "../templates/beast/Rexian.js";
+import beastCreate from "../beast-create.js";
 
 $(document).ready(function () {
 	const data = loadFromLocal("character") || null;
 	let save = loadFromLocal("save");
 	let locationDetails;
+	let beastDetails;
 
 	if (!save) {
 		const locationDetails = setLocation();
+		const beastDetails = beastCreate();
+		const beast = new Rexian(beastDetails.element, beastDetails.weakness);
 		const saveData = {
 			cityName: locationDetails.name,
 			citySize: {
@@ -24,6 +29,11 @@ $(document).ready(function () {
 				name: locationDetails.type.name,
 				description: locationDetails.type.description,
 			},
+			beast: {
+				type: "Rexian",
+				element: beastDetails.element,
+				weakness: beastDetails.weakness,
+			},
 		};
 		saveToLocal("save", saveData);
 	} else {
@@ -31,6 +41,9 @@ $(document).ready(function () {
 			name: save.cityName,
 			size: save.citySize,
 			type: save.cityType,
+		};
+		beastDetails = {
+			beast: save.beast,
 		};
 	}
 
