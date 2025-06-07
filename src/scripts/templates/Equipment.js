@@ -12,20 +12,22 @@ export default class Equipment {
 
 	equip(item) {
 		const slot = item.slotType;
-		if (slot === weapon) {
+		if (slot === "weapon") {
 			const emptyIndex = this.slots.weapons.findIndex((w) => w === null);
 			if (emptyIndex === -1) {
 				throw new Error("Todos os espaços de armas já estão ocupados.");
 			}
-			this.slots.weapons[emptyIndex] = item; //item equipado no slot de armas
+			this.slots.weapons[emptyIndex] = item;
+			item.equipped = true;
 		} else {
 			if (!this.slots.hasOwnProperty(slot)) {
 				throw new Error(`Slot ${slot} não existe.`);
 			}
 			if (this.slots[slot]) {
-				// subsitui o slot já ocupado
+				this.slots[slot].equipped = false;
 			}
-			this.slots[slot] = item; // item equipado no slot
+			this.slots[slot] = item;
+			item.equipped = true;
 		}
 	}
 
@@ -35,11 +37,15 @@ export default class Equipment {
 				throw new Error("Índice inválido de slot para armas.");
 			}
 			const item = this.slots.weapons[index];
+			if (item) {
+				item.equipped = false;
+			}
 			this.slots.weapons[index] = null;
 			return item;
 		} else {
 			if (this.slots[slot]) {
 				const item = this.slots[slot];
+				item.equipped = false;
 				this.slots[slot] = null;
 				return item;
 			}

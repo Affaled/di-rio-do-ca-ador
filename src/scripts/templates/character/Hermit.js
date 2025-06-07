@@ -43,20 +43,33 @@ export default class Hermit extends Character {
 
 		Hermit.initialItems.forEach((item) => {
 			this.backpack.addItem(item);
+			// Auto-equip weapons
+			if (item.slotType === "weapon") {
+				try {
+					this.equipment.equip(item);
+				} catch (e) {
+					// If can't equip (slots full), keep in backpack
+				}
+			}
 		});
 
 		switch (petType) {
 			case "FlyingPet":
 				this.pet = new FlyingPet();
+				this.pet.name = "Companheiro Voador";
 				break;
 			case "FightingPet":
 				this.pet = new FightingPet();
+				this.pet.name = "Companheiro Lutador";
 				break;
 			case "TrackerPet":
 				this.pet = new TrackerPet();
+				this.pet.name = "Companheiro Rastreador";
 				break;
 			default:
 				throw new Error("Tipo de animal de estimação inválido.");
 		}
+
+		this.updateAtaques();
 	}
 }

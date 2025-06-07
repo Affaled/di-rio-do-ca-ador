@@ -34,12 +34,15 @@ $(document).ready(function () {
 			attributes: character.attributes,
 			advantages: character.advantages,
 			maxLifePoints: character.maxLifePoints,
+			lifePoints: character.maxLifePoints, // Explicitly set to max for new characters
+			weariness: 0, // Explicitly set to 0 for new characters
 			image: character.image,
 			backpack: character.backpack.items,
 			pet: character.pet
 				? {
 						type: character.pet.type,
 						maxLifePoints: character.pet.maxLifePoints,
+						lifePoints: character.pet.maxLifePoints, // Explicitly set to max for new pets
 						damage: character.pet.damage,
 						abilities: character.pet.abilities,
 				  }

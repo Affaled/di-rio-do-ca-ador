@@ -1,5 +1,6 @@
 export class Pet {
-	constructor(type, maxLifePoints, damage) {
+	constructor(name, type, maxLifePoints, damage) {
+		this.name = name;
 		this.type = type;
 		this.maxLifePoints = maxLifePoints;
 		this.lifePoints = maxLifePoints;
@@ -19,8 +20,8 @@ export class FlyingPet extends Pet {
 		},
 	];
 
-	constructor() {
-		super(FlyingPet.type, FlyingPet.maxLifePoints, FlyingPet.damage);
+	constructor(name) {
+		super(name, FlyingPet.type, FlyingPet.maxLifePoints, FlyingPet.damage);
 
 		this.abilities = FlyingPet.abilities;
 	}
@@ -32,8 +33,13 @@ export class FightingPet extends Pet {
 	static damage = { normal: 2 };
 	static abilities = [];
 
-	constructor() {
-		super(FightingPet.type, FightingPet.maxLifePoints, FightingPet.damage);
+	constructor(name) {
+		super(
+			name,
+			FightingPet.type,
+			FightingPet.maxLifePoints,
+			FightingPet.damage
+		);
 
 		this.abilities = FightingPet.abilities;
 	}
@@ -50,8 +56,8 @@ export class TrackerPet extends Pet {
 		},
 	];
 
-	constructor() {
-		super(TrackerPet.type, TrackerPet.maxLifePoints, TrackerPet.damage);
+	constructor(name) {
+		super(name, TrackerPet.type, TrackerPet.maxLifePoints, TrackerPet.damage);
 
 		this.abilities = TrackerPet.abilities;
 	}
