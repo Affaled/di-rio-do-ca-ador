@@ -1,5 +1,5 @@
 import Backpack from "../Backpack.js";
-import { Equipment } from "../Equipment.js";
+import Equipment from "../Equipment.js";
 import { rolld6 } from "../../rolld6.js";
 
 export default class Character {
