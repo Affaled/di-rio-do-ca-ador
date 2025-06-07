@@ -89,8 +89,8 @@ $(document).ready(function () {
 
 	let beast;
 	if (!save) {
-		const locationDetails = setLocation();
-		const beastDetails = beastCreate();
+		locationDetails = setLocation();
+		beastDetails = beastCreate();
 		beast = new Rexian(beastDetails.element, beastDetails.weakness);
 		const saveData = {
 			cityName: locationDetails.name,
@@ -111,6 +111,7 @@ $(document).ready(function () {
 			},
 		};
 		saveToLocal("save", saveData);
+		save = saveData; // Update save variable with the new data
 	} else {
 		locationDetails = {
 			name: save.cityName,
@@ -287,7 +288,10 @@ $(document).ready(function () {
 		const origBeberPocao = character.beberPocao;
 		character.beberPocao = function (...args) {
 			const result = origBeberPocao.apply(this, args);
-			setTimeout(() => window.updateGameSidebar(), 100);
+			if (result) {
+				// Only update if potion was actually consumed
+				window.updateGameSidebar();
+			}
 			return result;
 		};
 		const origEsquivar = character.esquivar;

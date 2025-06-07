@@ -59,7 +59,9 @@ export default class Character {
 				potion.effect(this);
 			}
 			this.backpack.removeItem(potion);
+			return true; // Indicate potion was consumed
 		}
+		return false; // Indicate no potion was found/consumed
 	}
 
 	esquivar() {
