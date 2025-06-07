@@ -337,8 +337,12 @@ class GameController {
 	}
 
 	playerPotion($window) {
-		this.character.beberPocao();
-		$window.html(`<div class="vn-dialog"><p>Você bebeu uma poção!</p></div>`);
+		const potionUsed = this.character.beberPocao();
+		if (potionUsed) {
+			$window.html(`<div class="vn-dialog"><p>Você bebeu uma poção!</p></div>`);
+		} else {
+			$window.html(`<div class="vn-dialog"><p>Você não tem poções!</p></div>`);
+		}
 
 		// Force sidebar update after using potion
 		setTimeout(() => {

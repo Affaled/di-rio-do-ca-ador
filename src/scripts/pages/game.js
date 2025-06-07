@@ -290,7 +290,7 @@ $(document).ready(function () {
 			const result = origBeberPocao.apply(this, args);
 			if (result) {
 				// Only update if potion was actually consumed
-				window.updateGameSidebar();
+				setTimeout(() => window.updateGameSidebar(), 100);
 			}
 			return result;
 		};

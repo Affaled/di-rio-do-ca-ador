@@ -95,9 +95,17 @@ class Potion extends Item {
 	}
 }
 
-class Arrow extends Item {}
+class Arrow extends Item {
+	constructor(name, description, craft) {
+		super(name, description, "arrow", craft);
+	}
+}
 
-class Utility extends Item {}
+class Utility extends Item {
+	constructor(name, description, craft) {
+		super(name, description, "utility", craft);
+	}
+}
 
 class Material extends Item {
 	constructor(name, description) {

@@ -8,5 +8,8 @@ export const PoçãoDeVida = new Potion(
 	function (character) {
 		character.lifePoints = character.maxLifePoints;
 		character.weariness = 0;
+		console.log(
+			`Potion effect applied: Life restored to ${character.lifePoints}, Weariness reset to ${character.weariness}`
+		);
 	}
 );

@@ -55,9 +55,19 @@ export default class Character {
 			(item) => item.slotType === "potion"
 		);
 		if (potion) {
+			// Store values before effect for debugging
+			const lifeBefore = this.lifePoints;
+			const wearinessBefore = this.weariness;
+
 			if (typeof potion.effect === "function") {
 				potion.effect(this);
 			}
+
+			// Log the effect for debugging
+			console.log(`Potion used: ${potion.name}`);
+			console.log(`Life: ${lifeBefore} -> ${this.lifePoints}`);
+			console.log(`Weariness: ${wearinessBefore} -> ${this.weariness}`);
+
 			this.backpack.removeItem(potion);
 			return true; // Indicate potion was consumed
 		}

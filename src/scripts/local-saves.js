@@ -10,6 +10,12 @@ import {
 	Utility,
 	Material,
 } from "./templates/Item.js";
+import { PoçãoDeVida } from "../database/Potions.js";
+
+// Known potions database for effect restoration
+const knownPotions = {
+	"Poção de vida": PoçãoDeVida,
+};
 
 function reconstructItem(itemData) {
 	if (!itemData || !itemData.slotType) return itemData;
@@ -62,6 +68,12 @@ function reconstructItem(itemData) {
 					itemData.protectionPoints
 				);
 			case "potion":
+				// Check if this is a known potion with a predefined effect
+				const knownPotion = knownPotions[itemData.name];
+				if (knownPotion) {
+					return knownPotion;
+				}
+				// Fallback to generic reconstruction
 				return new Potion(
 					itemData.name,
 					itemData.description,
