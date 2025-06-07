@@ -251,7 +251,7 @@ class GameController {
 						${this.beast.parts
 							.map(
 								(p, i) => `
-							<button class="choose-part" data-i="${i}" style="padding: 0.5rem 1rem; background: var(--color-item-armor); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
+							<button class="choose-part" data-part-index="${i}" style="padding: 0.5rem 1rem; background: var(--color-item-armor); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
 								${p.name}<br><small>Defesa: ${p.currentDefense ?? p.defense}</small>
 							</button>
 						`
@@ -266,11 +266,23 @@ class GameController {
 		// Clear all previous event handlers on the window
 		$window.off();
 
-		// Use event delegation to handle button clicks
-		$window.on("click", ".choose-part", (e) => {
+		// Use one-time event handlers to prevent multiple clicks
+		$window.one("click", ".choose-part", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
-			const partIndex = parseInt($(e.target).data("i"));
+
+			const partIndex = parseInt($(e.currentTarget).attr("data-part-index"));
+			console.log("Selected part index:", partIndex);
+
+			if (
+				isNaN(partIndex) ||
+				partIndex < 0 ||
+				partIndex >= this.beast.parts.length
+			) {
+				console.error("Invalid part index:", partIndex);
+				return;
+			}
+
 			const part = this.beast.parts[partIndex];
 			console.log("Selected part:", part, "Index:", partIndex);
 
@@ -304,7 +316,7 @@ class GameController {
 			}
 		});
 
-		$window.on("click", "#back-to-weapons", (e) => {
+		$window.one("click", "#back-to-weapons", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			this.chooseAttack($window);
