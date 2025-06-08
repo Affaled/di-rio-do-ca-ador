@@ -29,7 +29,6 @@ function setupKeyboardNavigation({
 		const key = e.key;
 		const tag = document.activeElement.tagName.toLowerCase();
 
-		// Don't interfere with inputs, textareas, selects, or game dialogs
 		if (
 			["input", "textarea", "select"].includes(tag) ||
 			$(e.target).closest(".vn-dialog, .game__window").length > 0
@@ -53,7 +52,6 @@ function setupKeyboardNavigation({
 		}
 
 		if (key === "Enter" || key === " ") {
-			// Don't trigger selection if we're in a game dialog
 			if (
 				$(document.activeElement).closest(".vn-dialog, .game__window")
 					.length === 0

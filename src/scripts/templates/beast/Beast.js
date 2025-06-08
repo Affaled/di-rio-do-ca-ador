@@ -55,15 +55,8 @@ export default class Beast {
 	}
 
 	procurar(valorParaAchar) {
-		console.log("=== BEAST PROCURAR DEBUG ===");
-		console.log("Valor para achar (hide result):", valorParaAchar);
-
 		const resultado = rolld6();
 		const encontrou = resultado >= valorParaAchar;
-
-		console.log("Beast roll result:", resultado);
-		console.log("Found player:", encontrou);
-		console.log("=== FIM BEAST PROCURAR DEBUG ===");
 
 		return {
 			encontrou: encontrou,
@@ -76,7 +69,6 @@ export default class Beast {
 		const targets = ["character"];
 
 		if (character.pet && character.pet.lifePoints > 0) {
-			// Check if pet is flying (immune to direct attacks)
 			const isFlying = character.pet.abilities?.some(
 				(ability) => ability.name === "Voo" || ability.name === "Flying"
 			);
@@ -86,7 +78,6 @@ export default class Beast {
 			}
 		}
 
-		// Randomly choose target
 		const randomIndex = Math.floor(Math.random() * targets.length);
 		return targets[randomIndex];
 	}

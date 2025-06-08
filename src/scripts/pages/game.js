@@ -89,7 +89,7 @@ $(document).ready(function () {
 			},
 		};
 		saveToLocal("save", saveData);
-		save = saveData; // Update save variable with the new data
+		save = saveData;
 	} else {
 		locationDetails = {
 			name: save.cityName,
@@ -97,7 +97,6 @@ $(document).ready(function () {
 			type: save.cityType,
 		};
 		beast = new Rexian(save.beast.element, save.beast.weakness);
-		// Restore beast state if available
 		if (save.beast.lifePoints !== undefined) {
 			beast.lifePoints = save.beast.lifePoints;
 		}
@@ -125,27 +124,22 @@ $(document).ready(function () {
 		return;
 	}
 
-	// Properly restore character state
 	character.attributes = data.attributes;
 	character.advantages = data.advantages;
 	character.maxLifePoints = data.maxLifePoints;
-	// Only restore lifePoints if it exists and is valid, otherwise use max
 	character.lifePoints =
 		data.lifePoints !== undefined && data.lifePoints > 0
 			? data.lifePoints
 			: character.maxLifePoints;
-	// Only restore weariness if it exists and is valid, otherwise use 0
 	character.weariness =
 		data.weariness !== undefined && data.weariness >= 0 ? data.weariness : 0;
 	character.image = data.image;
 	character.backpack.items = data.backpack || [];
 
-	// Restore equipment state if available
 	if (data.equipment) {
 		character.equipment.slots =
 			data.equipment.slots || character.equipment.slots;
 
-		// Ensure equipped items are marked as equipped
 		Object.values(character.equipment.slots).forEach((slot) => {
 			if (Array.isArray(slot)) {
 				slot.forEach((item) => {
@@ -159,7 +153,6 @@ $(document).ready(function () {
 
 	if (character.pet && data.pet) {
 		character.pet.maxLifePoints = data.pet.maxLifePoints;
-		// Only restore pet lifePoints if it exists and is valid, otherwise use max
 		character.pet.lifePoints =
 			data.pet.lifePoints !== undefined && data.pet.lifePoints > 0
 				? data.pet.lifePoints
@@ -168,15 +161,12 @@ $(document).ready(function () {
 		character.pet.abilities = data.pet.abilities;
 	}
 
-	// Update attacks after character is fully initialized
 	character.updateAtaques();
 
-	// Set the character instance globally for the game controller as early as possible
 	window.gameCharacter = character;
 	console.log("Character set globally:", character);
 
 	function updateSidebar() {
-		// Use the character instance directly instead of through gameController
 		if (!character) {
 			console.warn("Character not initialized");
 			return;
@@ -203,7 +193,6 @@ $(document).ready(function () {
 			</ul>
 		`);
 
-		// Save updated character state
 		const characterData = {
 			name: character.name,
 			profession: character.profession,
@@ -229,14 +218,12 @@ $(document).ready(function () {
 		};
 		saveToLocal("character", characterData);
 
-		// Save beast state
 		if (save) {
 			save.beast.lifePoints = beast.lifePoints;
 			saveToLocal("save", save);
 		}
 	}
 
-	// Inicializa a sidebar
 	updateSidebar();
 
 	$(".game__location").html(`
@@ -245,10 +232,8 @@ $(document).ready(function () {
 		<p>${locationDetails.type.name}: ${locationDetails.type.description}</p>
 	`);
 
-	// Exponha função global para atualização de status
 	window.updateGameSidebar = updateSidebar;
 
-	// Patch para Character para atualizar a sidebar ao tomar dano ou usar poção
 	if (character) {
 		const origReceberDano = character.receberDano;
 		character.receberDano = function (...args) {
@@ -260,7 +245,6 @@ $(document).ready(function () {
 		character.beberPocao = function (...args) {
 			const result = origBeberPocao.apply(this, args);
 			if (result) {
-				// Only update if potion was actually consumed
 				setTimeout(() => window.updateGameSidebar(), 100);
 			}
 			return result;
@@ -273,6 +257,5 @@ $(document).ready(function () {
 		};
 	}
 
-	// Atualize também a sidebar quando a janela for focada (caso haja mudanças externas)
 	$(window).on("focus", updateSidebar);
 });

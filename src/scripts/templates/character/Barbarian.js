@@ -35,13 +35,10 @@ export default class Barbarian extends Character {
 
 		Barbarian.initialItems.forEach((item) => {
 			this.backpack.addItem(item);
-			// Auto-equip weapons
 			if (item.slotType === "weapon") {
 				try {
 					this.equipment.equip(item);
-				} catch (e) {
-					// If can't equip (slots full), keep in backpack
-				}
+				} catch (e) {}
 			}
 		});
 
