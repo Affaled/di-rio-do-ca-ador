@@ -118,7 +118,6 @@ $(document).ready(function () {
 
 		if (petType === "Voador") petType = "FlyingPet";
 		else if (petType === "Lutador") petType = "FightingPet";
-		else if (petType === "Rastreador") petType = "TrackerPet";
 		character = new Hermit(data.name, petType);
 	} else {
 		alert("Profissão desconhecida. Crie um personagem válido.");

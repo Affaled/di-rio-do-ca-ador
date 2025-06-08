@@ -2,7 +2,7 @@ import Character from "./Character.js";
 import { Sabre, Adaga, ArcoComposto } from "../../../database/Weapons.js";
 import { PoçãoDeVida } from "../../../database/Potions.js";
 import { ArmaduraDeCouro } from "../../../database/Armors.js";
-import { FlyingPet, FightingPet, TrackerPet } from "../Pet.js";
+import { FlyingPet, FightingPet } from "../Pet.js";
 
 export default class Hermit extends Character {
 	static profession = "Eremita";
@@ -61,10 +61,6 @@ export default class Hermit extends Character {
 			case "FightingPet":
 				this.pet = new FightingPet();
 				this.pet.name = "Companheiro Lutador";
-				break;
-			case "TrackerPet":
-				this.pet = new TrackerPet();
-				this.pet.name = "Companheiro Rastreador";
 				break;
 			default:
 				throw new Error("Tipo de animal de estimação inválido.");

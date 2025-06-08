@@ -1,6 +1,6 @@
 import Barbarian from "../templates/character/Barbarian.js";
 import Hermit from "../templates/character/Hermit.js";
-import { FlyingPet, FightingPet, TrackerPet } from "../templates/Pet.js";
+import { FlyingPet, FightingPet } from "../templates/Pet.js";
 import { saveToLocal } from "../local-saves.js";
 
 $(document).ready(function () {
@@ -62,7 +62,6 @@ $(document).ready(function () {
 	const petClassMap = {
 		FlyingPet: FlyingPet,
 		FightingPet: FightingPet,
-		TrackerPet: TrackerPet,
 	};
 
 	function updateImage() {
@@ -135,7 +134,6 @@ $(document).ready(function () {
 					<select name="" id="character-pet">
 						<option value="FlyingPet">Voador</option>
 						<option value="FightingPet">Lutador</option>
-						<option value="TrackerPet">Rastreador</option>
 					</select>
 				</label>
 				<div class="new-character__container--row">
