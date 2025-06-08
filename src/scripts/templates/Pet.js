@@ -17,14 +17,32 @@ export class Pet {
 	}
 
 	atacar(beast) {
-		// Choose a random beast part to attack
-		const availableParts = beast.parts.filter((part) => part);
-		if (availableParts.length === 0) return null;
+		// Check if beast has parts and they are in an array
+		if (
+			!beast.parts ||
+			!Array.isArray(beast.parts) ||
+			beast.parts.length === 0
+		) {
+			console.error("Beast has no valid parts to attack");
+			return null;
+		}
 
+		// Get all available parts (all parts should be attackable)
+		const availableParts = beast.parts.filter((part) => part && part.name);
+
+		if (availableParts.length === 0) {
+			console.error("No valid parts found on beast");
+			return null;
+		}
+
+		// Choose a random part to attack
 		const randomPart =
 			availableParts[Math.floor(Math.random() * availableParts.length)];
 		const damage = this.damage.normal || 1;
 
+		console.log("Pet attacking part:", randomPart.name, "with damage:", damage);
+
+		// Attack the chosen part
 		const result = beast.receberDanoNaParte(randomPart.name, damage);
 
 		return {
