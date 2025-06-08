@@ -308,6 +308,18 @@ class GameController {
 					if (window.updateGameSidebar) window.updateGameSidebar();
 				}, 100);
 
+				// Check if beast is defeated
+				if (this.beast.lifePoints <= 0) {
+					setTimeout(() => {
+						$window.html(`
+							<div class="vn-dialog">
+								<p style="text-align: center; font-size: 1.2rem; color: #27ae60;"><strong>Você venceu a besta!</strong></p>
+							</div>
+						`);
+					}, 2000);
+					return;
+				}
+
 				setTimeout(() => {
 					this.playerHidden = false;
 					this.playerTurn = false;
@@ -367,6 +379,8 @@ class GameController {
 				$window.html(
 					`<div class="vn-dialog"><p>A besta não te encontrou e fugiu. Você venceu!</p></div>`
 				);
+				// Game ends here, don't continue turns
+				return;
 			}
 		} else {
 			this.beastAttack($window);
@@ -455,6 +469,30 @@ class GameController {
 		setTimeout(() => {
 			if (window.updateGameSidebar) window.updateGameSidebar();
 		}, 100);
+
+		// Check if character is still alive
+		if (this.character.lifePoints <= 0) {
+			setTimeout(() => {
+				$window.html(`
+					<div class="vn-dialog">
+						<p style="text-align: center; font-size: 1.2rem; color: #e74c3c;"><strong>Você foi derrotado!</strong></p>
+					</div>
+				`);
+			}, 2000);
+			return;
+		}
+
+		// Check if beast is still alive
+		if (this.beast.lifePoints <= 0) {
+			setTimeout(() => {
+				$window.html(`
+					<div class="vn-dialog">
+						<p style="text-align: center; font-size: 1.2rem; color: #27ae60;"><strong>Você venceu a besta!</strong></p>
+					</div>
+				`);
+			}, 2000);
+			return;
+		}
 
 		setTimeout(() => {
 			this.playerTurn = true;
