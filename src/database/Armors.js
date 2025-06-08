@@ -10,5 +10,5 @@ export const ArmaduraDeCouro = new Armor(
 	"Armadura de Couro",
 	"Uma armadura leve feita de couro resistente.",
 	null,
-	8 // protection points as durability
+	8
 );

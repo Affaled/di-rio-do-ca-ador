@@ -5,7 +5,6 @@ import Rexian from "./templates/beast/Rexian.js";
 const save = loadFromLocal("save");
 const characterData = loadFromLocal("character");
 
-// Handle case when save is null/undefined
 const beastName = save?.beast?.type || "Rexian";
 const beastElement = save?.beast?.element || "fogo";
 const beastWeakness = save?.beast?.weakness || "gelo";
@@ -73,17 +72,14 @@ const investigationDialog = [
 class GameController {
 	constructor() {
 		this.state = GameState.INVESTIGATION;
-		// Wait for character to be properly initialized
 		this.character = null;
 
-		// Create beast with default values if save is null
 		const beastData = save?.beast || {
 			element: beastElement,
 			weakness: beastWeakness,
 		};
 		this.beast = new Rexian(beastData.element, beastData.weakness);
 
-		// Restore beast state if available
 		if (save?.beast?.lifePoints !== undefined) {
 			this.beast.lifePoints = save.beast.lifePoints;
 		}
@@ -92,17 +88,14 @@ class GameController {
 		this.petTurn = false;
 		this.beastTurnActive = false;
 
-		// Initialize character when available
 		this.initializeCharacter();
 	}
 
 	initializeCharacter() {
-		// Wait for the character to be available from game.js
 		const checkCharacter = () => {
 			if (window.gameCharacter) {
 				this.character = window.gameCharacter;
 				console.log("Character initialized in GameController:", this.character);
-				// Ensure attacks array exists
 				if (!this.character.ataques) {
 					this.character.ataques = [];
 				}
@@ -122,13 +115,11 @@ class GameController {
 		} else if (this.petTurn) {
 			this.handlePetTurn($window);
 		} else {
-			// Beast turn
 			this.beastTurn($window);
 		}
 	}
 
 	showPlayerActions($window) {
-		// Clear any existing event handlers first
 		$window.off();
 		$(document).off("keydown.vnDialog");
 
@@ -150,7 +141,6 @@ class GameController {
 			</div>
 		`);
 
-		// Use specific button targeting to prevent conflicts
 		$window.find("#fight-attack").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -169,7 +159,6 @@ class GameController {
 	}
 
 	chooseAttack($window) {
-		// Ensure character and attacks exist before filtering
 		if (!this.character) {
 			console.warn("Character not initialized yet");
 			setTimeout(() => this.chooseAttack($window), 100);
@@ -180,7 +169,7 @@ class GameController {
 
 		if (!this.character.ataques || !Array.isArray(this.character.ataques)) {
 			console.warn("Character attacks not available or not an array");
-			this.character.ataques = []; // Initialize empty array as fallback
+			this.character.ataques = [];
 		}
 
 		const availableAttacks = this.character.ataques.filter(
@@ -189,7 +178,6 @@ class GameController {
 
 		console.log("Available attacks:", availableAttacks);
 
-		// If no attacks available, show a message
 		if (availableAttacks.length === 0) {
 			$window.html(`
 				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
@@ -238,10 +226,8 @@ class GameController {
 			</div>
 		`);
 
-		// Clear all previous event handlers
 		$window.off();
 
-		// Use specific targeting for event handlers
 		$window.find(".choose-attack").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -297,10 +283,8 @@ class GameController {
 			</div>
 		`);
 
-		// Clear all previous event handlers
 		$window.off();
 
-		// Use specific targeting for event handlers
 		$window.find(".choose-part").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -337,12 +321,10 @@ class GameController {
 					</div>
 				`);
 
-				// Force sidebar update after beast takes damage
 				setTimeout(() => {
 					if (window.updateGameSidebar) window.updateGameSidebar();
 				}, 100);
 
-				// Check if beast is defeated
 				if (this.beast.lifePoints <= 0) {
 					setTimeout(() => {
 						$window.html(`
@@ -357,7 +339,6 @@ class GameController {
 				setTimeout(() => {
 					this.playerHidden = false;
 					this.playerTurn = false;
-					// Check if pet should have a turn
 					if (this.character?.pet && this.character.pet.lifePoints > 0) {
 						this.petTurn = true;
 					}
@@ -374,9 +355,7 @@ class GameController {
 	}
 
 	handlePetTurn($window) {
-		// Check if pet exists and is alive
 		if (!this.character?.pet || this.character.pet.lifePoints <= 0) {
-			// Skip pet turn if no pet or pet is dead
 			this.petTurn = false;
 			this.handleFight();
 			return;
@@ -433,12 +412,10 @@ class GameController {
 			`);
 		}
 
-		// Force sidebar update after pet attack
 		setTimeout(() => {
 			if (window.updateGameSidebar) window.updateGameSidebar();
 		}, 100);
 
-		// Check if beast is defeated
 		if (this.beast.lifePoints <= 0) {
 			setTimeout(() => {
 				$window.html(`
@@ -450,7 +427,6 @@ class GameController {
 			return;
 		}
 
-		// End pet turn and move to beast turn
 		setTimeout(() => {
 			this.petTurn = false;
 			this.handleFight();
@@ -482,7 +458,6 @@ class GameController {
 						<p>Ela fugiu. Você venceu!</p>
 					</div>`
 				);
-				// Game ends here, don't continue turns
 				return;
 			}
 		} else {
@@ -494,7 +469,6 @@ class GameController {
 		const ataque = this.beast.escolherAtaque();
 		const dano = ataque.damage.normal;
 
-		// Determine target
 		const target = this.beast.escolherAlvo(this.character);
 		const targetName = target === "pet" ? this.character.pet.type : "você";
 
@@ -525,7 +499,6 @@ class GameController {
 			</div>
 		`);
 
-		// Clear previous handlers and use specific targeting
 		$window.off();
 
 		if (target === "pet") {
@@ -557,7 +530,6 @@ class GameController {
 				this.endBeastTurn($window);
 			});
 		} else {
-			// Existing player defense options
 			$window.find("#defend-dodge").on("click", (e) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -612,12 +584,10 @@ class GameController {
 	}
 
 	endBeastTurn($window) {
-		// Force sidebar update after character takes damage
 		setTimeout(() => {
 			if (window.updateGameSidebar) window.updateGameSidebar();
 		}, 100);
 
-		// Check if character is still alive
 		if (this.character.lifePoints <= 0) {
 			setTimeout(() => {
 				$window.html(`
@@ -629,7 +599,6 @@ class GameController {
 			return;
 		}
 
-		// Check if beast is still alive
 		if (this.beast.lifePoints <= 0) {
 			setTimeout(() => {
 				$window.html(`
@@ -702,7 +671,6 @@ class GameController {
 			}
 		};
 
-		// Clear previous handlers before adding new ones
 		$window.off("click");
 		$(document).off("keydown.vnDialog");
 
@@ -723,7 +691,6 @@ class GameController {
 		const $window = $(".game__window");
 		$window.empty();
 
-		// Check if character has a flying pet
 		const hasFloatingPet =
 			this.character?.pet &&
 			this.character.pet.abilities?.some(
@@ -732,10 +699,8 @@ class GameController {
 
 		let found;
 		if (hasFloatingPet) {
-			// Flying pet always finds the beast first
 			found = "player";
 		} else {
-			// Normal random chance
 			found = Math.random() < 0.5 ? "player" : "beast";
 		}
 
@@ -771,7 +736,6 @@ class GameController {
 	}
 }
 
-// Initialize game controller after a small delay to ensure character is ready
 setTimeout(() => {
 	window.game = new GameController();
 	window.game.update();

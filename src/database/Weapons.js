@@ -1,14 +1,13 @@
 import { Weapon } from "../scripts/templates/Item.js";
 import { Minerio } from "./Material.js";
 
-/* Arquivo para armazenar as armas */
 export const Sabre = new Weapon(
-	"Sabre", // name
-	"Uma espada curva e afiada, ideal para cortes rápidos.", // description
-	{ [Minerio.nome]: 4 }, // craft
-	{ normal: 3 }, // damage
-	"melee", // range
-	1 // hands
+	"Sabre",
+	"Uma espada curva e afiada, ideal para cortes rápidos.",
+	{ [Minerio.nome]: 4 },
+	{ normal: 3 },
+	"melee",
+	1
 );
 
 export const Adaga = new Weapon(
@@ -18,7 +17,7 @@ export const Adaga = new Weapon(
 	{ normal: 2 },
 	"melee",
 	1,
-	{ throwable: true } // features
+	{ throwable: true }
 );
 
 export const ArcoComposto = new Weapon(

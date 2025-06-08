@@ -60,7 +60,7 @@ class Armor extends Item {
 		super(name, description, "armor", craft);
 
 		this.protectionPoints = protectionPoints;
-		this.maxProtectionPoints = protectionPoints; // Store original value
+		this.maxProtectionPoints = protectionPoints;
 	}
 }
 

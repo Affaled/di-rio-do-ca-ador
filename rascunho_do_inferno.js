@@ -11,7 +11,7 @@ selecionaAOpcao()
 					sorteiaNomeCidade()
 					sorteiaTamanhoCidade()
 					sorteiaTipoCidade()
-				defineDificuldade() // sempre começa em fácil
+				defineDificuldade()
 				defineBesta()
 					sorteia(dificuldade)
 					sorteiaElemento(terreno)
@@ -19,7 +19,7 @@ selecionaAOpcao()
 					sorteiaFuria()
 					carregaAtributos()
 						emFuria = false
-						tamanho = 2 // metros
+						tamanho = 2
 						vida = 10
 						maxVida = 15
 						ataqueAtual = 3						
@@ -47,7 +47,7 @@ selecionaAOpcao()
 						iniciarCacada()
 							rastrearBesta()
 								contadorDeRastros = 0
-								sorteiaAtividadeDoDia() // define o que foi encontrado
+								sorteiaAtividadeDoDia()
 									se atacado_animal 
 										sorteiaAnimal(terreno)
 										comecarLuta()
@@ -60,7 +60,7 @@ selecionaAOpcao()
 										lutarContraBesta(atacaPrimeiro = true)
 									se foiEncontradoPelaBesta
 										lutarContraBesta(atacaprimeiro = false)
-								sorteiaAtividadeDaNoite() // define o quanto recuperou de vida
+								sorteiaAtividadeDaNoite() 
 									se atacado_animal
 										sorteiaAnimal(terreno)
 										comecarLuta()
