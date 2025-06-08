@@ -88,6 +88,9 @@ class GameController {
 			this.beast.lifePoints = save.beast.lifePoints;
 		}
 		this.playerHidden = false;
+		this.playerTurn = false;
+		this.petTurn = false;
+		this.beastTurnActive = false;
 
 		// Initialize character when available
 		this.initializeCharacter();
@@ -113,9 +116,13 @@ class GameController {
 	handleFight() {
 		const $window = $(".game__window");
 		$window.empty();
+
 		if (this.playerTurn) {
 			this.showPlayerActions($window);
+		} else if (this.petTurn) {
+			this.handlePetTurn($window);
 		} else {
+			// Beast turn
 			this.beastTurn($window);
 		}
 	}
@@ -350,6 +357,10 @@ class GameController {
 				setTimeout(() => {
 					this.playerHidden = false;
 					this.playerTurn = false;
+					// Check if pet should have a turn
+					if (this.character?.pet && this.character.pet.lifePoints > 0) {
+						this.petTurn = true;
+					}
 					this.handleFight();
 				}, 2000);
 			}
@@ -362,36 +373,88 @@ class GameController {
 		});
 	}
 
-	playerHide($window) {
-		const hideResult = this.character.esconder();
-		this.playerHidden = true;
-		this.hideValue = hideResult;
-		$window.html(
-			`<div class="vn-dialog"><p>Você tenta se esconder! (Rolagem: ${hideResult})</p></div>`
-		);
-		setTimeout(() => {
-			this.playerTurn = false;
+	handlePetTurn($window) {
+		// Check if pet exists and is alive
+		if (!this.character?.pet || this.character.pet.lifePoints <= 0) {
+			// Skip pet turn if no pet or pet is dead
+			this.petTurn = false;
 			this.handleFight();
-		}, 1500);
-	}
-
-	playerPotion($window) {
-		const potionUsed = this.character.beberPocao();
-		if (potionUsed) {
-			$window.html(`<div class="vn-dialog"><p>Você bebeu uma poção!</p></div>`);
-		} else {
-			$window.html(`<div class="vn-dialog"><p>Você não tem poções!</p></div>`);
+			return;
 		}
 
-		// Force sidebar update after using potion
+		$window.html(`
+			<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+				<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+					<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+				</div>
+				<div class="vn-dialog" style="margin: 0;">
+					<div style="text-align: center; margin-bottom: 1rem;">
+						<strong>Turno do ${this.character.pet.type}</strong>
+					</div>
+					<div style="display: flex; gap: 1rem; justify-content: center;">
+						<button id="pet-attack" style="padding: 0.5rem 1rem; background: var(--color-item-weapon); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Atacar</button>
+					</div>
+				</div>
+			</div>
+		`);
+
+		$window.find("#pet-attack").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			this.executePetAttack($window);
+		});
+	}
+
+	executePetAttack($window) {
+		const attackResult = this.character.pet.atacar(this.beast);
+
+		if (!attackResult) {
+			$window.html(`
+				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+						<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+					</div>
+					<div class="vn-dialog" style="margin: 0;">
+						<p style="text-align: center; font-size: 1.1rem;"><strong>O pet não conseguiu atacar!</strong></p>
+					</div>
+				</div>
+			`);
+		} else {
+			$window.html(`
+				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+						<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+					</div>
+					<div class="vn-dialog" style="margin: 0;">
+						<p style="text-align: center; font-size: 1.1rem;"><strong>${this.character.pet.type} atacou ${attackResult.targetPart}!</strong></p>
+						<p style="text-align: center; font-size: 1rem;">${attackResult.result.mensagem}</p>
+					</div>
+				</div>
+			`);
+		}
+
+		// Force sidebar update after pet attack
 		setTimeout(() => {
 			if (window.updateGameSidebar) window.updateGameSidebar();
 		}, 100);
 
+		// Check if beast is defeated
+		if (this.beast.lifePoints <= 0) {
+			setTimeout(() => {
+				$window.html(`
+					<div class="vn-dialog">
+						<p style="text-align: center; font-size: 1.2rem; color: #27ae60;"><strong>Você venceu a besta!</strong></p>
+					</div>
+				`);
+			}, 2000);
+			return;
+		}
+
+		// End pet turn and move to beast turn
 		setTimeout(() => {
-			this.playerTurn = false;
+			this.petTurn = false;
 			this.handleFight();
-		}, 1500);
+		}, 2000);
 	}
 
 	beastTurn($window) {
@@ -580,6 +643,8 @@ class GameController {
 
 		setTimeout(() => {
 			this.playerTurn = true;
+			this.petTurn = false;
+			this.beastTurnActive = false;
 			this.playerHidden = false;
 			this.handleFight();
 		}, 2000);
@@ -699,6 +764,8 @@ class GameController {
 		setTimeout(() => {
 			this.state = GameState.FIGHT;
 			this.playerTurn = this.playerStarts;
+			this.petTurn = false;
+			this.beastTurnActive = false;
 			this.update();
 		}, 2000);
 	}

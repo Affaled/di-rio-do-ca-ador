@@ -15,6 +15,24 @@ export class Pet {
 			defeated: this.lifePoints <= 0,
 		};
 	}
+
+	atacar(beast) {
+		// Choose a random beast part to attack
+		const availableParts = beast.parts.filter((part) => part);
+		if (availableParts.length === 0) return null;
+
+		const randomPart =
+			availableParts[Math.floor(Math.random() * availableParts.length)];
+		const damage = this.damage.normal || 1;
+
+		const result = beast.receberDanoNaParte(randomPart.name, damage);
+
+		return {
+			targetPart: randomPart.name,
+			damage: damage,
+			result: result,
+		};
+	}
 }
 
 export class FlyingPet extends Pet {
