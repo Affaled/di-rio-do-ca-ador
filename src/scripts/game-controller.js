@@ -658,12 +658,31 @@ class GameController {
 		const $window = $(".game__window");
 		$window.empty();
 
-		const found = Math.random() < 0.5 ? "player" : "beast";
+		// Check if character has a flying pet
+		const hasFloatingPet =
+			this.character?.pet &&
+			this.character.pet.abilities?.some(
+				(ability) => ability.name === "Voo" || ability.name === "Flying"
+			);
+
+		let found;
+		if (hasFloatingPet) {
+			// Flying pet always finds the beast first
+			found = "player";
+		} else {
+			// Normal random chance
+			found = Math.random() < 0.5 ? "player" : "beast";
+		}
+
 		if (found === "player") {
+			const message = hasFloatingPet
+				? "Seu pet voador avistou a besta! Você age primeiro."
+				: "Você encontrou a Besta! Você age primeiro.";
+
 			$window.html(`
 				<div class="vn-dialog">
 					<strong>Narrador:</strong>
-					<p>Você encontrou a Besta! Você age primeiro.</p>
+					<p>${message}</p>
 				</div>
 				`);
 			this.playerStarts = true;
