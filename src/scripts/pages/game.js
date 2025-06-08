@@ -60,37 +60,15 @@ function renderCharacterStatus(character) {
 	`);
 }
 
-function renderBeastStatus(beast) {
-	$(".game__beast").remove();
-	$(".game__content").append(`
-		<div class="game__beast" style="position: absolute; top: 1rem; right: 1rem; width: 220px; background: rgba(30,20,10,0.85); border-radius: 12px; box-shadow: 0 0 8px #000; padding: 1rem; z-index: 2;">
-			<img src="${
-				beast.image
-			}" alt="Besta" style="width: 180px; height: 120px; object-fit: contain; display: block; margin: 0 auto 0.5rem auto; border: 2px solid #a68763; border-radius: 8px; background: #222;"/>
-			<p style="text-align:center;"><strong>${beast.name}</strong></p>
-			<div style="display: flex; align-items: center; gap: 0.5rem;">
-				<label>Vida:</label>
-				<div class="bar bar--life" style="flex:1;">
-					<div class="bar__fill" style="width: ${
-						(beast.lifePoints / beast.maxLifePoints) * 100
-					}%"></div>
-				</div>
-				<span>${beast.lifePoints} / ${beast.maxLifePoints}</span>
-			</div>
-		</div>
-	`);
-}
-
 $(document).ready(function () {
 	const data = loadFromLocal("character") || null;
 	let save = loadFromLocal("save");
 	let locationDetails;
-	let beastDetails;
 
 	let beast;
 	if (!save) {
 		locationDetails = setLocation();
-		beastDetails = beastCreate();
+		const beastDetails = beastCreate();
 		beast = new Rexian(beastDetails.element, beastDetails.weakness);
 		const saveData = {
 			cityName: locationDetails.name,
@@ -217,12 +195,6 @@ $(document).ready(function () {
 						maxLifePoints: character.pet.maxLifePoints,
 				  }
 				: null,
-		});
-
-		renderBeastStatus({
-			...beast,
-			lifePoints: beast.lifePoints,
-			maxLifePoints: beast.maxLifePoints,
 		});
 
 		$(".game__backpack").html(`
