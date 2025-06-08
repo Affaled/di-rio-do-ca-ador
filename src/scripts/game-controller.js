@@ -1,11 +1,14 @@
 import { loadFromLocal } from "./local-saves.js";
 import { rolld6 } from "./rolld6.js";
 import Rexian from "./templates/beast/Rexian.js";
+
 const save = loadFromLocal("save");
 const characterData = loadFromLocal("character");
-const beastName = save?.beast?.type || "???";
-const beastElement = save?.beast?.element || "???";
-const beastWeakness = save?.beast?.weakness || "???";
+
+// Handle case when save is null/undefined
+const beastName = save?.beast?.type || "Rexian";
+const beastElement = save?.beast?.element || "fogo";
+const beastWeakness = save?.beast?.weakness || "gelo";
 
 const GameState = {
 	INVESTIGATION: "investigação",
@@ -72,9 +75,16 @@ class GameController {
 		this.state = GameState.INVESTIGATION;
 		// Wait for character to be properly initialized
 		this.character = null;
-		this.beast = new Rexian(save.beast.element, save.beast.weakness);
+
+		// Create beast with default values if save is null
+		const beastData = save?.beast || {
+			element: beastElement,
+			weakness: beastWeakness,
+		};
+		this.beast = new Rexian(beastData.element, beastData.weakness);
+
 		// Restore beast state if available
-		if (save.beast.lifePoints !== undefined) {
+		if (save?.beast?.lifePoints !== undefined) {
 			this.beast.lifePoints = save.beast.lifePoints;
 		}
 		this.playerHidden = false;
@@ -386,15 +396,28 @@ class GameController {
 
 	beastTurn($window) {
 		if (this.playerHidden) {
+			console.log("=== BEAST TURN - SEARCHING ===");
+			console.log("Player hide value:", this.hideValue);
+			
 			const busca = this.beast.procurar(this.hideValue);
+			
+			console.log("Beast search result:", busca);
+			console.log("=== FIM BEAST TURN - SEARCHING ===");
+			
 			if (busca.encontrou) {
 				$window.html(
-					`<div class="vn-dialog"><p>A besta te encontrou! Ela vai atacar.</p></div>`
+					`<div class="vn-dialog">
+						<p>A besta te encontrou! (Rolou ${busca.rolagem} vs ${busca.necessario})</p>
+						<p>Ela vai atacar.</p>
+					</div>`
 				);
 				setTimeout(() => this.beastAttack($window), 1500);
 			} else {
 				$window.html(
-					`<div class="vn-dialog"><p>A besta não te encontrou e fugiu. Você venceu!</p></div>`
+					`<div class="vn-dialog">
+						<p>A besta não te encontrou! (Rolou ${busca.rolagem} vs ${busca.necessario})</p>
+						<p>Ela fugiu. Você venceu!</p>
+					</div>`
 				);
 				// Game ends here, don't continue turns
 				return;

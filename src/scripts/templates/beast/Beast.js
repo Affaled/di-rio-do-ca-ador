@@ -55,9 +55,18 @@ export default class Beast {
 	}
 
 	procurar(valorParaAchar) {
+		console.log("=== BEAST PROCURAR DEBUG ===");
+		console.log("Valor para achar (hide result):", valorParaAchar);
+
 		const resultado = rolld6();
+		const encontrou = resultado >= valorParaAchar;
+
+		console.log("Beast roll result:", resultado);
+		console.log("Found player:", encontrou);
+		console.log("=== FIM BEAST PROCURAR DEBUG ===");
+
 		return {
-			encontrou: resultado >= valorParaAchar,
+			encontrou: encontrou,
 			rolagem: resultado,
 			necessario: valorParaAchar,
 		};

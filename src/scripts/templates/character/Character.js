@@ -112,8 +112,19 @@ export default class Character {
 	}
 
 	esconder() {
+		console.log("=== ESCONDER DEBUG ===");
+		console.log("Character attributes:", this.attributes);
+		console.log("Hide attribute:", this.attributes?.hide);
+
 		const baseRoll = rolld6();
 		const hideBonus = this.attributes?.hide || 0;
-		return baseRoll + hideBonus;
+		const result = baseRoll + hideBonus;
+
+		console.log("Base roll:", baseRoll);
+		console.log("Hide bonus:", hideBonus);
+		console.log("Final result:", result);
+		console.log("=== FIM ESCONDER DEBUG ===");
+
+		return result;
 	}
 }
