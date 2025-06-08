@@ -111,6 +111,10 @@ class GameController {
 	}
 
 	showPlayerActions($window) {
+		// Clear any existing event handlers first
+		$window.off();
+		$(document).off("keydown.vnDialog");
+
 		$window.html(`
 			<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
 				<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
@@ -129,9 +133,22 @@ class GameController {
 			</div>
 		`);
 
-		$("#fight-attack").on("click", () => this.chooseAttack($window));
-		$("#fight-hide").on("click", () => this.playerHide($window));
-		$("#fight-potion").on("click", () => this.playerPotion($window));
+		// Use specific button targeting to prevent conflicts
+		$window.find("#fight-attack").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			this.chooseAttack($window);
+		});
+		$window.find("#fight-hide").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			this.playerHide($window);
+		});
+		$window.find("#fight-potion").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			this.playerPotion($window);
+		});
 	}
 
 	chooseAttack($window) {
@@ -204,11 +221,11 @@ class GameController {
 			</div>
 		`);
 
-		// Clear all previous event handlers on the window
+		// Clear all previous event handlers
 		$window.off();
 
-		// Use event delegation to handle button clicks
-		$window.on("click", ".choose-attack", (e) => {
+		// Use specific targeting for event handlers
+		$window.find(".choose-attack").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			const attackIndex = parseInt($(e.target).data("i"));
@@ -219,7 +236,7 @@ class GameController {
 			}
 		});
 
-		$window.on("click", "#back-to-actions", (e) => {
+		$window.find("#back-to-actions").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			this.showPlayerActions($window);
@@ -263,11 +280,11 @@ class GameController {
 			</div>
 		`);
 
-		// Clear all previous event handlers on the window
+		// Clear all previous event handlers
 		$window.off();
 
-		// Use one-time event handlers to prevent multiple clicks
-		$window.one("click", ".choose-part", (e) => {
+		// Use specific targeting for event handlers
+		$window.find(".choose-part").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -328,7 +345,7 @@ class GameController {
 			}
 		});
 
-		$window.one("click", "#back-to-weapons", (e) => {
+		$window.find("#back-to-weapons").on("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			this.chooseAttack($window);
@@ -410,7 +427,12 @@ class GameController {
 			</div>
 		`);
 
-		$("#defend-dodge").on("click", () => {
+		// Clear previous handlers and use specific targeting
+		$window.off();
+
+		$window.find("#defend-dodge").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
 			this.character.esquivar();
 			$window.html(`
 				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
@@ -425,7 +447,9 @@ class GameController {
 			this.endBeastTurn($window);
 		});
 
-		$("#defend-armor").on("click", () => {
+		$window.find("#defend-armor").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
 			console.log("=== DEFEND ARMOR CLICKED ===");
 			console.log("Character:", this.character);
 			console.log("Dano do ataque:", dano);
@@ -459,7 +483,9 @@ class GameController {
 			this.endBeastTurn($window);
 		});
 
-		$("#defend-life").on("click", () => {
+		$window.find("#defend-life").on("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
 			console.log("=== DEFEND LIFE CLICKED ===");
 			console.log("Character:", this.character);
 			console.log("Dano do ataque:", dano);
@@ -576,14 +602,22 @@ class GameController {
 				this.update();
 			}
 		};
-		$window.off("click").on("click", next);
-		$(document)
-			.off("keydown.vnDialog")
-			.on("keydown.vnDialog", (e) => {
-				if (e.key === "Enter") {
-					next();
-				}
-			});
+
+		// Clear previous handlers before adding new ones
+		$window.off("click");
+		$(document).off("keydown.vnDialog");
+
+		$window.on("click", ".vn-dialog", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			next();
+		});
+		$(document).on("keydown.vnDialog", (e) => {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				next();
+			}
+		});
 	}
 
 	handleHunt() {

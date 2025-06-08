@@ -29,7 +29,11 @@ function setupKeyboardNavigation({
 		const key = e.key;
 		const tag = document.activeElement.tagName.toLowerCase();
 
-		if (["input", "textarea", "select"].includes(tag)) {
+		// Don't interfere with inputs, textareas, selects, or game dialogs
+		if (
+			["input", "textarea", "select"].includes(tag) ||
+			$(e.target).closest(".vn-dialog, .game__window").length > 0
+		) {
 			return;
 		}
 
@@ -49,8 +53,14 @@ function setupKeyboardNavigation({
 		}
 
 		if (key === "Enter" || key === " ") {
-			onSelect($items.get(currentIndex));
-			e.preventDefault();
+			// Don't trigger selection if we're in a game dialog
+			if (
+				$(document.activeElement).closest(".vn-dialog, .game__window")
+					.length === 0
+			) {
+				onSelect($items.get(currentIndex));
+				e.preventDefault();
+			}
 		}
 	});
 
