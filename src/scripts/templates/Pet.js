@@ -6,6 +6,15 @@ export class Pet {
 		this.lifePoints = maxLifePoints;
 		this.damage = damage;
 	}
+
+	receberDano(damage) {
+		this.lifePoints = Math.max(0, this.lifePoints - damage);
+		return {
+			success: true,
+			message: `O pet perdeu ${damage} pontos de vida. Vida restante: ${this.lifePoints}`,
+			defeated: this.lifePoints <= 0,
+		};
+	}
 }
 
 export class FlyingPet extends Pet {

@@ -398,12 +398,12 @@ class GameController {
 		if (this.playerHidden) {
 			console.log("=== BEAST TURN - SEARCHING ===");
 			console.log("Player hide value:", this.hideValue);
-			
+
 			const busca = this.beast.procurar(this.hideValue);
-			
+
 			console.log("Beast search result:", busca);
 			console.log("=== FIM BEAST TURN - SEARCHING ===");
-			
+
 			if (busca.encontrou) {
 				$window.html(
 					`<div class="vn-dialog">
@@ -431,21 +431,33 @@ class GameController {
 		const ataque = this.beast.escolherAtaque();
 		const dano = ataque.damage.normal;
 
+		// Determine target
+		const target = this.beast.escolherAlvo(this.character);
+		const targetName = target === "pet" ? this.character.pet.type : "você";
+
 		$window.html(`
 			<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
 				<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
-					<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+					<img src="${this.beast.image}" alt="${
+			this.beast.name
+		}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
 				</div>
 				<div class="vn-dialog" style="margin: 0;">
 					<div style="text-align: center; margin-bottom: 1rem;">
-						<strong>A besta usou ${ataque.name}!</strong><br>
+						<strong>A besta usou ${ataque.name} contra ${targetName}!</strong><br>
 						<span style="color: #e74c3c;">Dano: ${dano}</span>
 					</div>
-					<div style="display: flex; gap: 1rem; justify-content: center;">
-						<button id="defend-dodge" style="padding: 0.5rem 1rem; background: var(--color-primary); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Esquivar</button>
-						<button id="defend-armor" style="padding: 0.5rem 1rem; background: var(--color-item-armor); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Usar Armadura</button>
-						<button id="defend-life" style="padding: 0.5rem 1rem; background: var(--color-item-weapon); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Tomar na Vida</button>
-					</div>
+					${
+						target === "pet"
+							? `<div style="display: flex; gap: 1rem; justify-content: center;">
+							<button id="defend-pet-take" style="padding: 0.5rem 1rem; background: var(--color-item-weapon); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Pet Toma Dano</button>
+						</div>`
+							: `<div style="display: flex; gap: 1rem; justify-content: center;">
+							<button id="defend-dodge" style="padding: 0.5rem 1rem; background: var(--color-primary); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Esquivar</button>
+							<button id="defend-armor" style="padding: 0.5rem 1rem; background: var(--color-item-armor); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Usar Armadura</button>
+							<button id="defend-life" style="padding: 0.5rem 1rem; background: var(--color-item-weapon); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Tomar na Vida</button>
+						</div>`
+					}
 				</div>
 			</div>
 		`);
@@ -453,88 +465,87 @@ class GameController {
 		// Clear previous handlers and use specific targeting
 		$window.off();
 
-		$window.find("#defend-dodge").on("click", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			this.character.esquivar();
-			$window.html(`
-				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
-					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
-						<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+		if (target === "pet") {
+			$window.find("#defend-pet-take").on("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+
+				const result = this.character.pet.receberDano(dano);
+
+				$window.html(`
+					<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+						<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+							<img src="${this.beast.image}" alt="${
+					this.beast.name
+				}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+						</div>
+						<div class="vn-dialog" style="margin: 0;">
+							<p style="text-align: center; font-size: 1.1rem;"><strong>${
+								result.message
+							}</strong></p>
+							${
+								result.defeated
+									? `<p style="text-align: center; color: #e74c3c;"><strong>Seu pet foi derrotado!</strong></p>`
+									: ""
+							}
+						</div>
 					</div>
-					<div class="vn-dialog" style="margin: 0;">
-						<p style="text-align: center; font-size: 1.1rem;"><strong>Você esquivou, mas ganhou 1 de fadiga!</strong></p>
+				`);
+				this.endBeastTurn($window);
+			});
+		} else {
+			// Existing player defense options
+			$window.find("#defend-dodge").on("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				this.character.esquivar();
+				$window.html(`
+					<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+						<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+							<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+						</div>
+						<div class="vn-dialog" style="margin: 0;">
+							<p style="text-align: center; font-size: 1.1rem;"><strong>Você esquivou, mas ganhou 1 de fadiga!</strong></p>
+						</div>
 					</div>
-				</div>
-			`);
-			this.endBeastTurn($window);
-		});
+				`);
+				this.endBeastTurn($window);
+			});
 
-		$window.find("#defend-armor").on("click", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			console.log("=== DEFEND ARMOR CLICKED ===");
-			console.log("Character:", this.character);
-			console.log("Dano do ataque:", dano);
-			console.log(
-				"Armadura antes do ataque:",
-				this.character.equipment.slots.armor
-			);
-
-			if (!this.character || typeof this.character.receberDano !== "function") {
-				console.error("Character receberDano method not available");
-				return;
-			}
-			this.character.receberDano(dano, true);
-
-			console.log(
-				"Armadura depois do ataque:",
-				this.character.equipment.slots.armor
-			);
-			console.log("=== FIM DEFEND ARMOR ===");
-
-			$window.html(`
-				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
-					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
-						<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+			$window.find("#defend-armor").on("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				this.character.receberDano(dano, true);
+				$window.html(`
+					<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+						<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+							<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+						</div>
+						<div class="vn-dialog" style="margin: 0;">
+							<p style="text-align: center; font-size: 1.1rem;"><strong>Você usou a armadura para absorver o dano!</strong></p>
+						</div>
 					</div>
-					<div class="vn-dialog" style="margin: 0;">
-						<p style="text-align: center; font-size: 1.1rem;"><strong>Você usou a armadura para absorver o dano!</strong></p>
+				`);
+				this.endBeastTurn($window);
+			});
+
+			$window.find("#defend-life").on("click", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				this.character.receberDano(dano, false);
+				$window.html(`
+					<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
+						<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
+							<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
+						</div>
+						<div class="vn-dialog" style="margin: 0;">
+							<p style="text-align: center; font-size: 1.1rem;"><strong>Você tomou o dano na vida!</strong></p>
+						</div>
 					</div>
-				</div>
-			`);
-			this.endBeastTurn($window);
-		});
-
-		$window.find("#defend-life").on("click", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
-			console.log("=== DEFEND LIFE CLICKED ===");
-			console.log("Character:", this.character);
-			console.log("Dano do ataque:", dano);
-			console.log("Vida antes do ataque:", this.character.lifePoints);
-
-			if (!this.character || typeof this.character.receberDano !== "function") {
-				console.error("Character receberDano method not available");
-				return;
-			}
-			this.character.receberDano(dano, false);
-
-			console.log("Vida depois do ataque:", this.character.lifePoints);
-			console.log("=== FIM DEFEND LIFE ===");
-
-			$window.html(`
-				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
-					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
-						<img src="${this.beast.image}" alt="${this.beast.name}" style="max-width: 300px; max-height: 200px; object-fit: contain; border: 2px solid #a68763; border-radius: 8px; background: #222;">
-					</div>
-					<div class="vn-dialog" style="margin: 0;">
-						<p style="text-align: center; font-size: 1.1rem;"><strong>Você tomou o dano na vida!</strong></p>
-					</div>
-				</div>
-			`);
-			this.endBeastTurn($window);
-		});
+				`);
+				this.endBeastTurn($window);
+			});
+		}
 	}
 
 	endBeastTurn($window) {

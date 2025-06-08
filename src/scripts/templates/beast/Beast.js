@@ -71,4 +71,23 @@ export default class Beast {
 			necessario: valorParaAchar,
 		};
 	}
+
+	escolherAlvo(character) {
+		const targets = ["character"];
+
+		if (character.pet && character.pet.lifePoints > 0) {
+			// Check if pet is flying (immune to direct attacks)
+			const isFlying = character.pet.abilities?.some(
+				(ability) => ability.name === "Voo" || ability.name === "Flying"
+			);
+
+			if (!isFlying) {
+				targets.push("pet");
+			}
+		}
+
+		// Randomly choose target
+		const randomIndex = Math.floor(Math.random() * targets.length);
+		return targets[randomIndex];
+	}
 }
