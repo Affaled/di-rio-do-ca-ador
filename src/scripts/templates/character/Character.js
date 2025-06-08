@@ -35,19 +35,52 @@ export default class Character {
 	}
 
 	receberDano(dano, usarArmadura = false) {
+		console.log("=== RECEBER DANO DEBUG ===");
+		console.log("Dano inicial:", dano);
+		console.log("Usar armadura:", usarArmadura);
+		console.log("Vida antes:", this.lifePoints);
+
 		if (usarArmadura) {
 			// Logic for armor absorption
 			const armor = this.equipment.slots.armor;
+			console.log("Armadura equipada:", armor);
+
 			if (armor && armor.protectionPoints > 0) {
+				console.log(
+					"Pontos de proteção da armadura antes:",
+					armor.protectionPoints
+				);
 				const absorbed = Math.min(dano, armor.protectionPoints);
 				armor.protectionPoints -= absorbed;
 				dano -= absorbed;
+
+				console.log("Dano absorvido pela armadura:", absorbed);
+				console.log(
+					"Pontos de proteção da armadura depois:",
+					armor.protectionPoints
+				);
+				console.log("Dano restante:", dano);
+
+				// If armor is broken, remove it
+				if (armor.protectionPoints <= 0) {
+					console.log(`${armor.name} quebrou! Removendo armadura.`);
+					this.equipment.unequip("armor");
+				}
+			} else {
+				console.log("Nenhuma armadura válida encontrada ou sem proteção");
 			}
 		}
 
+		// Only apply remaining damage to life
 		if (dano > 0) {
+			console.log("Aplicando dano restante à vida:", dano);
 			this.lifePoints = Math.max(0, this.lifePoints - dano);
+		} else {
+			console.log("Nenhum dano restante para aplicar à vida");
 		}
+
+		console.log("Vida depois:", this.lifePoints);
+		console.log("=== FIM RECEBER DANO DEBUG ===");
 	}
 
 	beberPocao() {

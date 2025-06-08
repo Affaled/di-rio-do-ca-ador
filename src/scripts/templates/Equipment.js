@@ -32,23 +32,34 @@ export default class Equipment {
 	}
 
 	unequip(slot, index = null) {
+		console.log("=== UNEQUIP DEBUG ===");
+		console.log("Slot:", slot);
+		console.log("Index:", index);
+
 		if (slot === "weapon") {
 			if (index === null || index < 0 || index >= this.slots.weapons.length) {
+				console.log("Erro: Índice inválido de slot para armas.");
 				throw new Error("Índice inválido de slot para armas.");
 			}
 			const item = this.slots.weapons[index];
 			if (item) {
+				console.log("Removendo arma:", item.name);
 				item.equipped = false;
 			}
 			this.slots.weapons[index] = null;
+			console.log("=== FIM UNEQUIP DEBUG ===");
 			return item;
 		} else {
-			if (this.slots[slot]) {
-				const item = this.slots[slot];
+			const item = this.slots[slot];
+			if (item) {
+				console.log("Removendo item do slot", slot + ":", item.name);
 				item.equipped = false;
 				this.slots[slot] = null;
+				console.log("=== FIM UNEQUIP DEBUG ===");
 				return item;
 			}
+			console.log("Slot", slot, "já estava vazio");
+			console.log("=== FIM UNEQUIP DEBUG ===");
 			return null; // Slot já está vazio
 		}
 	}

@@ -7,8 +7,8 @@ import {
 } from "../scripts/templates/Item.js";
 
 export const ArmaduraDeCouro = new Armor(
-	"Amadura de Couro",
+	"Armadura de Couro",
 	"Uma armadura leve feita de couro resistente.",
 	null,
-	{ normal: 8 }
+	8 // protection points as durability
 );

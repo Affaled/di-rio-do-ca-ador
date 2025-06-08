@@ -426,11 +426,26 @@ class GameController {
 		});
 
 		$("#defend-armor").on("click", () => {
+			console.log("=== DEFEND ARMOR CLICKED ===");
+			console.log("Character:", this.character);
+			console.log("Dano do ataque:", dano);
+			console.log(
+				"Armadura antes do ataque:",
+				this.character.equipment.slots.armor
+			);
+
 			if (!this.character || typeof this.character.receberDano !== "function") {
 				console.error("Character receberDano method not available");
 				return;
 			}
 			this.character.receberDano(dano, true);
+
+			console.log(
+				"Armadura depois do ataque:",
+				this.character.equipment.slots.armor
+			);
+			console.log("=== FIM DEFEND ARMOR ===");
+
 			$window.html(`
 				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
 					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">
@@ -445,11 +460,20 @@ class GameController {
 		});
 
 		$("#defend-life").on("click", () => {
+			console.log("=== DEFEND LIFE CLICKED ===");
+			console.log("Character:", this.character);
+			console.log("Dano do ataque:", dano);
+			console.log("Vida antes do ataque:", this.character.lifePoints);
+
 			if (!this.character || typeof this.character.receberDano !== "function") {
 				console.error("Character receberDano method not available");
 				return;
 			}
 			this.character.receberDano(dano, false);
+
+			console.log("Vida depois do ataque:", this.character.lifePoints);
+			console.log("=== FIM DEFEND LIFE ===");
+
 			$window.html(`
 				<div style="display: flex; flex-direction: column; height: 100%; gap: 1rem;">
 					<div style="display: flex; justify-content: center; align-items: center; flex: 1; background: rgba(20,15,10,0.8); border-radius: 12px; padding: 1rem;">

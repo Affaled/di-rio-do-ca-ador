@@ -43,8 +43,8 @@ export default class Hermit extends Character {
 
 		Hermit.initialItems.forEach((item) => {
 			this.backpack.addItem(item);
-			// Auto-equip weapons
-			if (item.slotType === "weapon") {
+			// Auto-equip weapons and armor
+			if (item.slotType === "weapon" || item.slotType === "armor") {
 				try {
 					this.equipment.equip(item);
 				} catch (e) {

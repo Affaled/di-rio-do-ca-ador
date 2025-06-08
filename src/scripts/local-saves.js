@@ -21,9 +21,10 @@ function reconstructItem(itemData) {
 	if (!itemData || !itemData.slotType) return itemData;
 
 	try {
+		let reconstructedItem;
 		switch (itemData.slotType) {
 			case "weapon":
-				return new Weapon(
+				reconstructedItem = new Weapon(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
@@ -32,41 +33,51 @@ function reconstructItem(itemData) {
 					itemData.hands,
 					itemData.features
 				);
+				break;
 			case "helmet":
-				return new Helmet(
+				reconstructedItem = new Helmet(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
 					itemData.protectionPoints
 				);
+				break;
 			case "armor":
-				return new Armor(
+				reconstructedItem = new Armor(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
-					itemData.protectionPoints
+					itemData.maxProtectionPoints || itemData.protectionPoints
 				);
+				// Restore current protection points if different from max
+				if (itemData.protectionPoints !== undefined) {
+					reconstructedItem.protectionPoints = itemData.protectionPoints;
+				}
+				break;
 			case "bracelets":
-				return new Bracelet(
+				reconstructedItem = new Bracelet(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
 					itemData.protectionPoints
 				);
+				break;
 			case "boots":
-				return new Boots(
+				reconstructedItem = new Boots(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
 					itemData.protectionPoints
 				);
+				break;
 			case "shield":
-				return new Shield(
+				reconstructedItem = new Shield(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
 					itemData.protectionPoints
 				);
+				break;
 			case "potion":
 				// Check if this is a known potion with a predefined effect
 				const knownPotion = knownPotions[itemData.name];
@@ -74,21 +85,39 @@ function reconstructItem(itemData) {
 					return knownPotion;
 				}
 				// Fallback to generic reconstruction
-				return new Potion(
+				reconstructedItem = new Potion(
 					itemData.name,
 					itemData.description,
 					itemData.craft,
 					itemData.effect
 				);
+				break;
 			case "arrow":
-				return new Arrow(itemData.name, itemData.description, itemData.craft);
+				reconstructedItem = new Arrow(
+					itemData.name,
+					itemData.description,
+					itemData.craft
+				);
+				break;
 			case "utility":
-				return new Utility(itemData.name, itemData.description, itemData.craft);
+				reconstructedItem = new Utility(
+					itemData.name,
+					itemData.description,
+					itemData.craft
+				);
+				break;
 			case "material":
 				return new Material(itemData.name, itemData.description);
 			default:
 				return itemData;
 		}
+
+		// Preserve equipped state
+		if (itemData.equipped !== undefined) {
+			reconstructedItem.equipped = itemData.equipped;
+		}
+
+		return reconstructedItem;
 	} catch (error) {
 		console.warn("Failed to reconstruct item:", itemData, error);
 		return itemData;
